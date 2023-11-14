@@ -1,5 +1,5 @@
 {
-  "name": "sepm-gruppenphase-e2e",
+  "name": "isg-project-meditrack-e2e",
   "version": "1.0.0",
   "description": "e2e tests",
   "main": "index.js",
