@@ -46,7 +46,6 @@ public class CustomUserDetailService implements UserService {
         LOGGER.debug("Load all user by email");
         try {
             ApplicationUser applicationUser = findApplicationUserByEmail(email);
-
             List<GrantedAuthority> grantedAuthorities;
             grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
             return new User(applicationUser.getEmail(), applicationUser.getPassword(), Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, grantedAuthorities);
@@ -69,14 +68,9 @@ public class CustomUserDetailService implements UserService {
     public String login(UserLoginDto userLoginDto) {
         LOGGER.debug("Login User {}", userLoginDto);
         UserDetails userDetails = loadUserByUsername(userLoginDto.getEmail());
-        if (userDetails != null
-            && userDetails.isAccountNonExpired()
-            && userDetails.isAccountNonLocked()
-            && userDetails.isCredentialsNonExpired()
-        ) {
+        if (userDetails != null) {
             ApplicationUser applicationUser = userRepository.findApplicationUserByEmail(userLoginDto.getEmail());
             if(passwordEncoder.matches(userLoginDto.getPassword(), userDetails.getPassword())) {
-                applicationUser.setTimesWrongPwEntered(0);
                 userRepository.save(applicationUser);
                 List<String> roles = userDetails.getAuthorities()
                     .stream()
@@ -85,17 +79,7 @@ public class CustomUserDetailService implements UserService {
                 return jwtTokenizer.getAuthToken(userDetails.getUsername(), roles);
             }
             else {
-                applicationUser.setTimesWrongPwEntered(applicationUser.getTimesWrongPwEntered() + 1);
-                int remainingTries = 5 - applicationUser.getTimesWrongPwEntered();
-                if(remainingTries <= 0) {
-                    applicationUser.setLockedOut(Boolean.TRUE);
-                    userRepository.save(applicationUser);
-                    throw new BadCredentialsException("Password is incorrect. Your account has been locked for entering an incorrect password too many times");
-                }
-                else   {
-                    userRepository.save(applicationUser);
-                    throw new BadCredentialsException("Password is incorrect. " + remainingTries + (remainingTries == 1 ? " try " : " tries ") + "remaining before account gets locked");
-                }
+                throw new BadCredentialsException("Password is incorrect");
             }
         }
         throw new BadCredentialsException("Account not found");
@@ -111,10 +95,6 @@ public class CustomUserDetailService implements UserService {
             throw new ValidationException(validationErrors.get(0), validationErrors);
         } catch(NotFoundException e){
             validator.validateForRegistration(applicationUser);
-            applicationUser.setAdmin(false);
-            applicationUser.setLockedOut(false);
-            applicationUser.setBonusPoints(0L);
-            applicationUser.setTimesWrongPwEntered(0);
             userRepository.save(applicationUser);
             UserDetails userDetails = loadUserByUsername(applicationUser.getEmail());
             List<String> roles = userDetails.getAuthorities()

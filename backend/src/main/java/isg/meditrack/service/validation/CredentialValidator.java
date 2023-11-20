@@ -35,21 +35,15 @@ public class CredentialValidator {
         }
         else validationErrors.add("Invalid Email, can not be null");
 
-        if (applicationUser.getFirstName() == null) {
-            validationErrors.add("No first name given");
-        } else if (applicationUser.getFirstName() .isBlank()) {
-            validationErrors.add("First name is given but blank");
-        } else if (applicationUser.getFirstName() .length() > 255) {
-            validationErrors.add("First name too long: longer than 255 characters");
+        if (applicationUser.getUserName() == null) {
+            validationErrors.add("No username given");
+        } else if (applicationUser.getUserName() .isBlank()) {
+            validationErrors.add("Username is given but blank");
+        } else if (applicationUser.getUserName() .length() > 255) {
+            validationErrors.add("Username too long: longer than 255 characters");
         }
 
-        if (applicationUser.getLastName() == null) {
-            validationErrors.add("No last name given");
-        } else if (applicationUser.getLastName().isBlank()) {
-            validationErrors.add("Last name is given but blank");
-        } else if (applicationUser.getLastName().length() > 255) {
-            validationErrors.add("Last name too long: longer than 255 characters");
-        }
+
         if (!validationErrors.isEmpty()) {
             throw new ValidationException(validationErrors.get(0), validationErrors);
         }

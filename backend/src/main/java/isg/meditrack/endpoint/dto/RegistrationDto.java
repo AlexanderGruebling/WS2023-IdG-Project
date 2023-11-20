@@ -11,10 +11,7 @@ public class RegistrationDto {
     private String password;
 
     @NotNull(message = "First name must not be null")
-    private String firstName;
-
-    @NotNull(message = "Last name must not be null")
-    private String lastName;
+    private String userName;
 
     public String getEmail() {
         return email;
@@ -33,12 +30,10 @@ public class RegistrationDto {
     }
 
     public String getFirstName() {
-        return this.firstName;
+        return this.userName;
     }
 
-    public String getLastName() {
-        return this.lastName;
-    }
+
 
 }
 
