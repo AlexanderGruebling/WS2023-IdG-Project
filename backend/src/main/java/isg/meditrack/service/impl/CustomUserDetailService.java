@@ -48,13 +48,8 @@ public class CustomUserDetailService implements UserService {
             ApplicationUser applicationUser = findApplicationUserByEmail(email);
 
             List<GrantedAuthority> grantedAuthorities;
-            Boolean isLocked = applicationUser.getLockedOut();
-            if (applicationUser.getAdmin()) {
-                grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
-            } else {
-                grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
-            }
-            return new User(applicationUser.getEmail(), applicationUser.getPassword(), Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, !isLocked, grantedAuthorities);
+            grantedAuthorities = AuthorityUtils.createAuthorityList("ROLE_USER");
+            return new User(applicationUser.getEmail(), applicationUser.getPassword(), Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, grantedAuthorities);
         } catch (NotFoundException e) {
             throw new UsernameNotFoundException(e.getMessage(), e);
         }
@@ -103,7 +98,7 @@ public class CustomUserDetailService implements UserService {
                 }
             }
         }
-        throw new BadCredentialsException("Account is currently locked");
+        throw new BadCredentialsException("Account not found");
     }
 
     @Override

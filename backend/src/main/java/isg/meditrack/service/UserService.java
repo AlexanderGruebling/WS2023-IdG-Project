@@ -30,7 +30,7 @@ public interface UserService extends UserDetailsService {
      * @return an application user
      */
     ApplicationUser findApplicationUserByEmail(String email);
-
+    
     /**
      * Log in a user.
      *
