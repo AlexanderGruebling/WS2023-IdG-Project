@@ -14,7 +14,7 @@ public class ApplicationUser {
     private String email;
 
     @Column(nullable = false, length = 100)
-    private String userName;
+    private String username;
 
 
     @Column(nullable = false, length = 100)
@@ -37,12 +37,12 @@ public class ApplicationUser {
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String firstName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -64,13 +64,13 @@ public class ApplicationUser {
         }
         return Objects.equals(id, applicationUser.id)
             && Objects.equals(email, applicationUser.email)
-            && Objects.equals(userName, applicationUser.userName)
+            && Objects.equals(username, applicationUser.username)
             && Objects.equals(password, applicationUser.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email, userName, password);
+        return Objects.hash(id, email, username, password);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ApplicationUser {
         return "ApplicationUser{" +
             "id=" + id +
             ", email='" + email + '\'' +
-            ", firstName='" + userName + '\'' +
+            ", firstName='" + username + '\'' +
             ", password='" + password + '\'' +
             '}';
     }
@@ -87,7 +87,7 @@ public class ApplicationUser {
     public static final class applicationUserBuilder{
         private Long id;
         private String email;
-        private String userName;
+        private String username;
         private String password;
 
         private applicationUserBuilder() {
@@ -107,8 +107,8 @@ public class ApplicationUser {
             return this;
         }
 
-        public applicationUserBuilder withUserName(String firstName) {
-            this.userName = userName;
+        public applicationUserBuilder withUsername(String firstName) {
+            this.username = username;
             return this;
         }
 
@@ -123,7 +123,7 @@ public class ApplicationUser {
             ApplicationUser applicationUser = new ApplicationUser();
             applicationUser.setId(id);
             applicationUser.setEmail(email);
-            applicationUser.setEmail(userName);
+            applicationUser.setUsername(username);
             applicationUser.setPassword(password);
             return applicationUser;
         }

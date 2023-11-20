@@ -21,9 +21,9 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'sepm-group-phase'`, () => {
+  it(`should have as title 'meditrack'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('SEPM Group Phase');
+    expect(app.title).toEqual('MediTrack');
   });
 });
