@@ -20,34 +20,23 @@
 
             <div class="row">
               <div class="col">
-                <label for="inputFirstName">First Name</label>
-                <input type="text" name="firstName" formControlName="firstName" class="form-control" id="inputFirstName"
-                       aria-describedby="firstNameHelp" placeholder="Enter first name">
-                <div *ngIf="submitted && loginForm.controls.firstName.errors" class="error">
-                  <small class="form-text text-warning" *ngIf="loginForm.controls.firstName.errors.required">Your first name is
+                <label for="inputUsername">Username</label>
+                <input type="text" name="username" formControlName="username" class="form-control" id="inputUsername"
+                       aria-describedby="usernameHelp" placeholder="Enter username">
+                <div *ngIf="submitted && loginForm.controls.username.errors" class="error">
+                  <small class="form-text text-warning" *ngIf="loginForm.controls.username.errors.required">Your username is
                     required!
                   </small>
                 </div>
               </div>
 
-              <div class="col">
-                <label for="inputLastName">Last Name</label>
-                <input type="text" name="lastName" formControlName="lastName" class="form-control" id="inputLastName"
-                       aria-describedby="lastNameHelp" placeholder="Enter Last Name">
-                <div *ngIf="submitted && loginForm.controls.lastName.errors" class="error">
-                  <small class="form-text text-warning" *ngIf="loginForm.controls.lastName.errors.required">Your last name is
-                    required!
-                  </small>
-                </div>
-              </div>
-            </div>
 
             <div class="form-group">
-              <label for="inputUsername">Email</label>
-              <input type="text" name="username" formControlName="username" class="form-control" id="inputUsername"
-                     aria-describedby="usernameHelp" placeholder="Enter email">
-              <div *ngIf="submitted && loginForm.controls.username.errors" class="error">
-                <small class="form-text text-warning" *ngIf="loginForm.controls.username.errors.required">Your email is
+              <label for="inputEmail">Email</label>
+              <input type="text" name="inputEmail" formControlName="email" class="form-control" id="inputEmail"
+                     aria-describedby="emailHelp" placeholder="Enter email">
+              <div *ngIf="submitted && loginForm.controls.email.errors" class="error">
+                <small class="form-text text-warning" *ngIf="loginForm.controls.email.errors.required">Your email is
                   required!
                 </small>
               </div>
@@ -69,7 +58,7 @@
             </div>
 
             <button type="button" (click)="registerUser()" class="btn btn-success float-right">Register</button>
-
+            </div>
           </form>
         </div>
 

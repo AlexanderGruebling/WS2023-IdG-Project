@@ -20,10 +20,9 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private formBuilder: UntypedFormBuilder, private registrationService: RegistrationService, private router: Router) {
     this.loginForm = this.formBuilder.group({
-      username: ['', [Validators.required]],
+      email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]]
+      username: ['', [Validators.required]]
     });
   }
 
@@ -34,10 +33,9 @@ export class RegistrationComponent implements OnInit {
     this.submitted = true;
     if (this.loginForm.valid) {
       const registration: Registration = new Registration(
-        this.loginForm.controls.username.value,
+        this.loginForm.controls.email.value,
         this.loginForm.controls.password.value,
-        this.loginForm.controls.firstName.value,
-        this.loginForm.controls.lastName.value );
+        this.loginForm.controls.username.value );
       this.authenticateUser(registration);
     } else {
       console.log('Invalid input');
