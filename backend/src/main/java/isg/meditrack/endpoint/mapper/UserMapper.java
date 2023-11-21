@@ -7,4 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper
 public interface UserMapper {
     ApplicationUser registrationDtoToApplicationUser(RegistrationDto registrationDto);
+
+    RegistrationDto applicationUserToRegistrationDto(ApplicationUser applicationUser);
 }

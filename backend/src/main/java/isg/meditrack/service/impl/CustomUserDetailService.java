@@ -72,15 +72,14 @@ public class CustomUserDetailService implements UserService {
         UserDetails userDetails = loadUserByUsername(userLoginDto.getEmail());
         if (userDetails != null) {
             ApplicationUser applicationUser = userRepository.findApplicationUserByEmail(userLoginDto.getEmail());
-            if(passwordEncoder.matches(userLoginDto.getPassword(), userDetails.getPassword())) {
+            if (passwordEncoder.matches(userLoginDto.getPassword(), userDetails.getPassword())) {
                 userRepository.save(applicationUser);
                 List<String> roles = userDetails.getAuthorities()
                     .stream()
                     .map(GrantedAuthority::getAuthority)
                     .toList();
                 return jwtTokenizer.getAuthToken(userDetails.getUsername(), roles);
-            }
-            else {
+            } else {
                 throw new BadCredentialsException("Password is incorrect");
             }
         }
@@ -90,12 +89,12 @@ public class CustomUserDetailService implements UserService {
     @Override
     public String register(ApplicationUser applicationUser) throws ValidationException {
         LOGGER.debug("Create new user {}", applicationUser);
-        try{
+        try {
             findApplicationUserByEmail(applicationUser.getEmail());
             List<String> validationErrors = new ArrayList<>();
             validationErrors.add("Email is already registered!");
             throw new ValidationException(validationErrors.get(0), validationErrors);
-        } catch(NotFoundException e){
+        } catch (NotFoundException e) {
             validator.validateForRegistration(applicationUser);
             userRepository.save(applicationUser);
             UserDetails userDetails = loadUserByUsername(applicationUser.getEmail());
@@ -107,4 +106,13 @@ public class CustomUserDetailService implements UserService {
         }
     }
 
+    @Override
+    public ApplicationUser getById(Long userId) throws NotFoundException {
+        LOGGER.debug("Get user {}", userId);
+        if (!userRepository.existsById(userId)) {
+            throw new NotFoundException("User with given Id doesnt exist");
+        } else {
+            return userRepository.getReferenceById(userId);
+        }
+    }
 }

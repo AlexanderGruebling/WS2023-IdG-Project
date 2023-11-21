@@ -32,14 +32,15 @@ public class CredentialValidator {
             } else if (!((applicationUser.getEmail().substring(applicationUser.getEmail().indexOf('@') + 1)).contains("."))) {
                 validationErrors.add("Invalid Email");
             }
+        } else {
+            validationErrors.add("Invalid Email, can not be null");
         }
-        else validationErrors.add("Invalid Email, can not be null");
 
         if (applicationUser.getUsername() == null) {
             validationErrors.add("No username given");
-        } else if (applicationUser.getUsername() .isBlank()) {
+        } else if (applicationUser.getUsername().isBlank()) {
             validationErrors.add("Username is given but blank");
-        } else if (applicationUser.getUsername() .length() > 255) {
+        } else if (applicationUser.getUsername().length() > 255) {
             validationErrors.add("Username too long: longer than 255 characters");
         }
 

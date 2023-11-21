@@ -79,45 +79,50 @@ public class ApplicationUser {
 
     @Override
     public String toString() {
-        return "ApplicationUser{" +
-            "id=" + id +
-            ", email='" + email + '\'' +
-            ", firstName='" + username + '\'' +
-            ", password='" + password + '\'' +
-            '}';
+        return "ApplicationUser{"
+            + "id="
+            + id
+            + ", email='"
+            + email + '\''
+            + ", firstName='" 
+            + username + '\''
+            + ", password='"
+            + password
+            + '\''
+            + '}';
     }
 
 
-    public static final class applicationUserBuilder{
+    public static final class ApplicationUserBuilder {
         private Long id;
         private String email;
         private String username;
         private String password;
 
-        private applicationUserBuilder() {
+        private ApplicationUserBuilder() {
         }
 
-        public static applicationUserBuilder anApplicationUser() {
-            return new applicationUserBuilder();
+        public static ApplicationUserBuilder anApplicationUser() {
+            return new ApplicationUserBuilder();
         }
 
-        public applicationUserBuilder withId(Long id) {
+        public ApplicationUserBuilder withId(Long id) {
             this.id = id;
             return this;
         }
 
-        public applicationUserBuilder withEmail(String email) {
+        public ApplicationUserBuilder withEmail(String email) {
             this.email = email;
             return this;
         }
 
-        public applicationUserBuilder withUsername(String firstName) {
+        public ApplicationUserBuilder withUsername(String firstName) {
             this.username = username;
             return this;
         }
 
 
-        public applicationUserBuilder withPassword(String password) {
+        public ApplicationUserBuilder withPassword(String password) {
             this.password = password;
             return this;
         }
