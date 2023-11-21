@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
-// @ts-ignore
-import jwt_decode from 'jwt-decode';
 import {Globals} from '../global/globals';
 import {Registration} from '../dtos/registration';
 

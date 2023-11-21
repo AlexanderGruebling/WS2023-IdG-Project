@@ -12,6 +12,8 @@ import {LoginComponent} from './components/login/login.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {httpInterceptorProviders} from './interceptors';
 import {RegistrationComponent} from './components/registration/registration.component';
+import { ProfileComponent } from './components/profile/profile.component';
+
 
 @NgModule({
   declarations: [
@@ -21,6 +23,7 @@ import {RegistrationComponent} from './components/registration/registration.comp
     HomeComponent,
     LoginComponent,
     RegistrationComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
