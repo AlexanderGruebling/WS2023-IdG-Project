@@ -30,7 +30,7 @@ public class LoginEndpoint {
     @PermitAll
     @PostMapping
     public String login(@RequestBody UserLoginDto userLoginDto) {
-        LOGGER.info("POST " + BASE_PATH  );
+        LOGGER.info("POST " + BASE_PATH);
         try {
             return userService.login(userLoginDto);
         } catch (BadCredentialsException e) {

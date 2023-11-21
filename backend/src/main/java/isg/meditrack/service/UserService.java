@@ -2,6 +2,7 @@ package isg.meditrack.service;
 
 import isg.meditrack.endpoint.dto.UserLoginDto;
 import isg.meditrack.entity.ApplicationUser;
+import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,4 +49,13 @@ public interface UserService extends UserDetailsService {
      * @throws ValidationException if credentials are bad
      */
     String register(ApplicationUser applicationUser) throws ValidationException;
+
+
+    /**
+     * Get a user with a certain id.
+     *
+     * @param id  id of account that is looked for
+     * @throws NotFoundException if user with given id doesn't exist
+     */
+    ApplicationUser getById(Long id) throws NotFoundException;
 }
