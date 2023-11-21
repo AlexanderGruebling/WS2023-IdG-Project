@@ -3,6 +3,7 @@ import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {RegistrationService} from '../../services/registration.service';
 import {Registration} from '../../dtos/registration';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration',
@@ -18,7 +19,10 @@ export class RegistrationComponent implements OnInit {
   error = false;
   errorMessage = '';
 
-  constructor(private formBuilder: UntypedFormBuilder, private registrationService: RegistrationService, private router: Router) {
+  constructor(private formBuilder: UntypedFormBuilder,
+              private registrationService: RegistrationService,
+              private router: Router,
+              private notification: ToastrService) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8)]],
@@ -42,36 +46,31 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
+
   /**
    * Send authentication data to the authService. If the authentication was successfully, the user will be forwarded to the message page
    *
    * @param registration authentication data from the user login form
    */
   authenticateUser(registration: Registration) {
-    console.log('Try to create user: ' + registration.email);
     this.registrationService.createUser(registration).subscribe({
       next: () => {
-        console.log('Successfully registered user: ' + registration.email);
+        this.notification.success('Successfully registered!');
         this.router.navigate(['/profile']);
       },
       error: error => {
-        console.log('Could not register due to:');
-        console.log(error);
-        this.error = true;
-        if (typeof error.error === 'object') {
-          this.errorMessage = error.error.error;
-        } else {
-          this.errorMessage = error.error;
+        console.error('Could not register due to: ', error);
+        if (error.status === 401) {
+          this.notification.error('Passwords do not match');
+        }
+        if (error.status === 422) {
+          this.notification.error('Invalid email format');
+        }
+        if (error.status === 409) {
+          this.notification.error('Email is already registered');
         }
       }
     });
-  }
-
-  /**
-   * Error flag will be deactivated, which clears the error message
-   */
-  vanishError() {
-    this.error = false;
   }
 
   ngOnInit() {

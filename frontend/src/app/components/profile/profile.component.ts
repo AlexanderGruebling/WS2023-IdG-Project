@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../services/auth.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Title} from '@angular/platform-browser';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-profile',
@@ -26,6 +27,7 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
+    private notification: ToastrService
   ) {
     titleService.setTitle('Profile');
   }
@@ -42,17 +44,18 @@ export class ProfileComponent implements OnInit {
   }
 
   delete(): void {
-    this.service.deleteUser().subscribe({
+    this.notification.error('Test');
+    /*this.service.deleteUser().subscribe({
       next: () => {
-        //this.notification.success(`Account ${this.profile.email} successfully deleted`);
+        this.notification.success(`Account ${this.profile.email} successfully deleted`);
         this.router.navigate(['/registration']);
       },
       error: error => {
         console.error('Error deleting account: ', error);
-        //this.notification.error(error.error.error, error.error.message);
+        this.notification.error(error.error.error, error.error.message);
       },
     });
-    this.authService.logoutUser();
+    this.authService.logoutUser();*/
   }
 
 

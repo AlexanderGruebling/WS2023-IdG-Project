@@ -13,6 +13,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {httpInterceptorProviders} from './interceptors';
 import {RegistrationComponent} from './components/registration/registration.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgxMaskModule} from 'ngx-mask';
 
 
 @NgModule({
@@ -32,6 +35,9 @@ import { ProfileComponent } from './components/profile/profile.component';
     HttpClientModule,
     NgbModule,
     FormsModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
