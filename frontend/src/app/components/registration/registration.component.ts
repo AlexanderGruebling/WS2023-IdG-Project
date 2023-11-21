@@ -52,7 +52,7 @@ export class RegistrationComponent implements OnInit {
     this.registrationService.createUser(registration).subscribe({
       next: () => {
         console.log('Successfully registered user: ' + registration.email);
-        this.router.navigate(['/message']);
+        this.router.navigate(['/profile']);
       },
       error: error => {
         console.log('Could not register due to:');
