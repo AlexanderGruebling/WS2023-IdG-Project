@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Objects;
 
+
 @Entity
 public class ApplicationUser {
 
@@ -23,6 +24,7 @@ public class ApplicationUser {
 
     @Column(nullable = false, length = 100)
     private String password;
+
 
 
     public Long getId() {
@@ -84,7 +86,7 @@ public class ApplicationUser {
             + id
             + ", email='"
             + email + '\''
-            + ", firstName='" 
+            + ", firstName='"
             + username + '\''
             + ", password='"
             + password

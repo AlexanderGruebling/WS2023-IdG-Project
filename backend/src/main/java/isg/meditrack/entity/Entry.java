@@ -2,12 +2,15 @@ package isg.meditrack.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 public class Entry {
@@ -23,4 +26,40 @@ public class Entry {
         name = "user_id"
     )
     private ApplicationUser user;
+
+    @ManyToMany(mappedBy = "usedIn", fetch = FetchType.LAZY)
+    private Set<Medication> usedMedication;
+
+    public Entry() {
+    }
+
+    public Entry(Long id, LocalDateTime date, ApplicationUser user) {
+        this.id = id;
+        this.date = date;
+        this.user = user;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public ApplicationUser getUser() {
+        return user;
+    }
+
+    public void setUser(ApplicationUser user) {
+        this.user = user;
+    }
 }
