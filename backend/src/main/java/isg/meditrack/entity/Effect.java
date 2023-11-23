@@ -27,8 +27,13 @@ public class Effect {
     @Column(nullable = false)
     private Boolean desired;
 
-    @Column(nullable = false)
-    private LocalDateTime date;
+    @ManyToOne
+    @JoinColumn(
+        nullable = false,
+        name = "entry_id"
+    )
+    private Entry entry;
+
 
     @ManyToOne
     @JoinColumn(
