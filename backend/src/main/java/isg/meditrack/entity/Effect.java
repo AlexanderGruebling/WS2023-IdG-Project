@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 @Entity
 public class Effect {
@@ -23,8 +24,11 @@ public class Effect {
     @Column(nullable = false)
     private int intensity;
 
-    @Column
+    @Column(nullable = false)
     private Boolean desired;
+
+    @Column(nullable = false)
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(
