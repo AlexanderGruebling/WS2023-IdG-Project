@@ -1,0 +1,41 @@
+<form #form="ngForm" (change)="changeMed()" >
+  <div class="form-group">
+    <label for="nameOfMed">Name des Medikaments:</label>
+    <input type="text"
+           id="nameOfMed"
+           placeholder="Aspirin"
+           class="form-control"
+           [(ngModel)]="med.name"
+           name="name"
+           #name="ngModel"
+           required
+    />
+    <div [hidden]="name.valid || name.pristine" class="alert alert-danger">Name ist ein Pflichtfeld!</div>
+  </div>
+  <div class="form-group">
+    <label for="dosageOfMed">Verschriebene Dosis:</label>
+    <input type="number"
+           id="dosageOfMed"
+           placeholder="2"
+           class="form-control"
+           [(ngModel)]="med.dosage"
+           name="dosage"
+           required
+           min="0"
+    />
+    <small id="dosageHelp" class="form-text text-muted">0 falls Sie unsicher sind.</small>
+  </div>
+  <div class="form-group">
+    <label for="frequencyOfIntake">Häufigkeit der Einnahme (in Tagen):</label>
+    <input type="number"
+           id="frequencyOfIntake"
+           placeholder="1"
+           class="form-control"
+           [(ngModel)]="med.frequency"
+           name="frequency"
+           required
+           min="0"
+    />
+    <small id="frequencyHelp" class="form-text text-muted">0 falls Sie unsicher sind.</small>
+  </div>
+</form>

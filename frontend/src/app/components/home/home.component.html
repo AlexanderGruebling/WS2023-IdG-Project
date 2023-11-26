@@ -3,5 +3,6 @@
   <hr class="my-4">
   <a *ngIf="!authService.isLoggedIn()" class="btn btn-primary btn-lg" routerLink="/login" role="button">Login</a>
   <div *ngIf="authService.isLoggedIn()">
+    <a routerLink="/add-meds" class="btn btn-primary btn-lg" role="button">Add Medication</a>
   </div>
 </div>
