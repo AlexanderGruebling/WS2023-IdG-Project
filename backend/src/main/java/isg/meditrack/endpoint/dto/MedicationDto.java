@@ -7,7 +7,7 @@ public class MedicationDto {
     @NotNull
     private String name;
     @NotNull
-    private double dosage;
+    private int dosage;
     @NotNull
     private double frequency;
 
@@ -20,11 +20,11 @@ public class MedicationDto {
         this.name = name;
     }
 
-    public double getDosage() {
+    public int getDosage() {
         return dosage;
     }
 
-    public void setDosage(double dosage) {
+    public void setDosage(int dosage) {
         this.dosage = dosage;
     }
 
