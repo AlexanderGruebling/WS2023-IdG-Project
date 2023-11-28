@@ -35,4 +35,27 @@ public class Medication {
     )
     private Set<Entry> usedIn;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getDosis() {
+        return dosis;
+    }
+
+    public void setDosis(int dosis) {
+        this.dosis = dosis;
+    }
+
+    public double getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(double frequency) {
+        this.frequency = frequency;
+    }
 }

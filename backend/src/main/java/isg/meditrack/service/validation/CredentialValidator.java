@@ -2,6 +2,7 @@ package isg.meditrack.service.validation;
 
 
 import isg.meditrack.entity.ApplicationUser;
+import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,26 @@ public class CredentialValidator {
             validationErrors.add("Username is given but blank");
         } else if (applicationUser.getUsername().length() > 255) {
             validationErrors.add("Username too long: longer than 255 characters");
+        }
+
+
+        if (!validationErrors.isEmpty()) {
+            throw new ValidationException(validationErrors.get(0), validationErrors);
+        }
+    }
+
+    public void validateMedForCreation(Medication medication) throws ValidationException {
+        LOGGER.debug("Validate credentials for Creation {}", medication);
+        List<String> validationErrors = new ArrayList<>();
+
+        if (medication.getName().length() > 100){
+            validationErrors.add("Name too long: longer than 100 characters");
+        }
+        if (medication.getDosis() < 0){
+            validationErrors.add("Dosis must not be negative");
+        }
+        if (medication.getFrequency() < 0){
+            validationErrors.add("Frequency must not be negative");
         }
 
 
