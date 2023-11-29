@@ -5,14 +5,17 @@ import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
 
+import java.util.List;
+
 public interface EntryService {
 
     /**
      * Create an entry with a certain id.
      *
      * @param newEntry new entry that should be added to the database
+     * @param medIds the ids of the medications that are linked to the entry
      */
-    Entry create(Entry newEntry);
+    Entry create(Entry newEntry, List<Long> medIds);
 
     /**
      * Get an entry with a certain id.

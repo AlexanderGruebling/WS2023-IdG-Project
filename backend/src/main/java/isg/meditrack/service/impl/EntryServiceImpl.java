@@ -40,11 +40,15 @@ public class EntryServiceImpl implements EntryService {
 
 
     @Override
-    public Entry create(Entry newEntry) {
+    public Entry create(Entry newEntry, List<Long> medIds) {
         LOGGER.debug("Create new entry {}", newEntry);
 
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         newEntry.setUser(userService.findApplicationUserByEmail(email));
+        for (Long id: medIds) {
+            newEntry.getUsedMedication().add(medicationService.getById(id));
+        }
+
         newEntry = entryRepository.save(newEntry);
 
         return newEntry;

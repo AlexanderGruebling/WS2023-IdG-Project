@@ -3,6 +3,9 @@ package isg.meditrack.endpoint;
 
 import isg.meditrack.endpoint.dto.EntryDto;
 import isg.meditrack.endpoint.mapper.EntryMapper;
+import isg.meditrack.endpoint.mapper.EffectMapper;
+import isg.meditrack.entity.Entry;
+import isg.meditrack.service.EffectService;
 import isg.meditrack.service.EntryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.PermitAll;
 import java.lang.invoke.MethodHandles;
 
 @RestController
@@ -37,6 +41,11 @@ public class EntryEndpoint {
     @ResponseStatus(HttpStatus.CREATED)
     public EntryDto create(@RequestBody EntryDto entryDto) {
         LOGGER.info("POST " + BASE_PATH);
+
+        Entry newEntry = entryService.create(entryMapper.entryDtoToEntry(entryDto), entryDto.getMedIds());
+        for (EffectDto i: entryDto.getEffects()) {
+            effectService.create(effectMapper.effectDtoToEffect(i), newEntry);
+        }
 
         return null;
 

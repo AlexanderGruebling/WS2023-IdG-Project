@@ -62,4 +62,12 @@ public class Entry {
     public void setUser(ApplicationUser user) {
         this.user = user;
     }
+
+    public Set<Medication> getUsedMedication() {
+        return usedMedication;
+    }
+
+    public void setUsedMedication(Set<Medication> usedMedication) {
+        this.usedMedication = usedMedication;
+    }
 }

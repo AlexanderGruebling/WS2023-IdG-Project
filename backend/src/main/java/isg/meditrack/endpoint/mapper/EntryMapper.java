@@ -6,6 +6,6 @@ import org.mapstruct.Mapper;
 
 @Mapper
 public interface EntryMapper {
-    Entry entryDtoToMedication(EntryDto entryDto);
+    Entry entryDtoToEntry(EntryDto entryDto);
     EntryDto entryToEntryDto(Entry entry);
 }
