@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Medication} from '../dtos/Medication';
 
-const baseUri = environment.backendUrl + '/medication';
+const baseUri = environment.backendUrl + '/api/v1/medication';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ export class MedicationService {
   getById(id: number): Observable<Medication> {
     return this.http.get<Medication>(`${baseUri}/${id}`);
   }
+
   create(med: Medication): Observable<Medication> {
     return this.http.post<Medication>(baseUri, med);
   }

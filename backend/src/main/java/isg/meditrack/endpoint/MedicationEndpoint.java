@@ -34,7 +34,7 @@ public class MedicationEndpoint {
     @PostMapping
     @Secured("ROLE_USER")
     @ResponseStatus(HttpStatus.CREATED)
-    public MedicationDto create(MedicationDto medicationDto) {
+    public MedicationDto create(@RequestBody MedicationDto medicationDto) {
         LOGGER.info("POST " + BASE_PATH);
 
         try {

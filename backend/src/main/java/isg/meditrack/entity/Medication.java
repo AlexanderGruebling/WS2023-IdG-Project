@@ -22,7 +22,7 @@ public class Medication {
     private String name;
 
     @Column(nullable = true, length = 100)
-    private int dosis;
+    private int dosage;
 
     @Column(nullable = true, length = 100)
     private double frequency;
@@ -43,12 +43,12 @@ public class Medication {
         this.name = name;
     }
 
-    public int getDosis() {
-        return dosis;
+    public int getDosage() {
+        return dosage;
     }
 
-    public void setDosis(int dosis) {
-        this.dosis = dosis;
+    public void setDosage(int dosage) {
+        this.dosage = dosage;
     }
 
     public double getFrequency() {
@@ -57,5 +57,13 @@ public class Medication {
 
     public void setFrequency(double frequency) {
         this.frequency = frequency;
+    }
+
+    public ApplicationUser getUser() {
+        return user;
+    }
+
+    public void setUser(ApplicationUser user) {
+        this.user = user;
     }
 }
