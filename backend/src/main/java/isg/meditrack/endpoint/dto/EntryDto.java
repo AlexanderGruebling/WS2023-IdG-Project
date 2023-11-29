@@ -12,4 +12,20 @@ public class EntryDto {
 
     @NotNull
     private List<Long> medIds;
+
+    public List<EffectDto> getEffects() {
+        return effects;
+    }
+
+    public void setEffects(List<EffectDto> effects) {
+        this.effects = effects;
+    }
+
+    public List<Long> getMedIds() {
+        return medIds;
+    }
+
+    public void setMedIds(List<Long> medIds) {
+        this.medIds = medIds;
+    }
 }

@@ -1,6 +1,7 @@
 package isg.meditrack.endpoint;
 
 
+import isg.meditrack.endpoint.dto.EffectDto;
 import isg.meditrack.endpoint.dto.EntryDto;
 import isg.meditrack.endpoint.mapper.EntryMapper;
 import isg.meditrack.endpoint.mapper.EffectMapper;
@@ -25,13 +26,17 @@ import java.lang.invoke.MethodHandles;
 public class EntryEndpoint {
 
     private final EntryMapper entryMapper;
+    private final EffectMapper effectMapper;
     private final EntryService entryService;
+    private final EffectService effectService;
     static final String BASE_PATH = "/api/v1/entry";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    public EntryEndpoint(EntryService entryService, EntryMapper entryMapper) {
+    public EntryEndpoint(EntryService entryService, EffectService effectService, EntryMapper entryMapper, EffectMapper effectMapper) {
         this.entryMapper = entryMapper;
+        this.effectMapper = effectMapper;
         this.entryService = entryService;
+        this.effectService = effectService;
     }
 
 
@@ -47,7 +52,6 @@ public class EntryEndpoint {
             effectService.create(effectMapper.effectDtoToEffect(i), newEntry);
         }
 
-        return null;
-
+        return entryMapper.entryToEntryDto(newEntry);
     }
 }

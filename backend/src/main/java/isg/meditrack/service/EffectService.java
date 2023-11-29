@@ -1,7 +1,7 @@
 package isg.meditrack.service;
 
 import isg.meditrack.entity.Effect;
-import isg.meditrack.exception.ValidationException;
+import isg.meditrack.entity.Entry;
 
 public interface EffectService {
 
@@ -9,7 +9,7 @@ public interface EffectService {
      * Create an effect with a certain id.
      *
      * @param newEff  new effect that should be added to the database
-     * @param entryId the id of the entry the effect is linked to
+     * @param entry  the entry the effect is linked to
      */
-    Effect create(Effect newEff, Long entryId);
+    Effect create(Effect newEff, Entry entry);
 }
