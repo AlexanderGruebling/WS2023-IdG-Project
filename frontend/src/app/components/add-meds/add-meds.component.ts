@@ -11,6 +11,7 @@ import {ToastrService} from 'ngx-toastr';
 export class AddMedsComponent implements OnInit {
   numberOfMeds = 1;
   meds: Set<Medication>;
+  validateChildren = false;
 
   constructor(
     private service: MedicationService,
@@ -22,12 +23,12 @@ export class AddMedsComponent implements OnInit {
     this.meds = new Set<Medication>();
   }
 
-  updateMeds(med: Medication) {
+  updateMeds(med: Medication): void {
     this.meds.add(med);
     console.log(this.meds);
   }
 
-  addMeds() {
+  addMeds(): void {
     this.meds.forEach(med => this.service.create(med).subscribe({
       next: data => {
         console.log(`${med.name} successfully created`);
@@ -38,6 +39,10 @@ export class AddMedsComponent implements OnInit {
       }
     }
     ));
+  }
+  addAnotherMedFE(): void {
+    this.numberOfMeds++;
+    this.validateChildren = true;
   }
 
 }

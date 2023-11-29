@@ -1,8 +1,11 @@
 <form #form="ngForm" (ngSubmit)="addMeds()">
   <div *ngFor="let med of [].constructor(numberOfMeds)">
-    <app-add-med (medChangedEvent)="updateMeds($event)"></app-add-med>
+    <app-add-med (medChangedEvent)="updateMeds($event)" updateValidationStatus="{{this.validateChildren}}"></app-add-med>
     <hr>
   </div>
-  <button type="button" class="btn btn-secondary" (click)="numberOfMeds = numberOfMeds + 1">Add another</button>
-  <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Add Meds</button>
+  <div class="mt-4 d-flex flex-row">
+    <button type="button" class="btn btn-secondary" (click)="addAnotherMedFE()">Add another</button>
+    <span class="flex-grow-1"></span>
+    <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Add Meds</button>
+  </div>
 </form>
