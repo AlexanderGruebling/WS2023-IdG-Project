@@ -8,7 +8,7 @@ import isg.meditrack.exception.ValidationException;
 public interface MedicationService {
 
     /**
-     * Get a medication with a certain id.
+     * Create a medication with a certain id.
      *
      * @param newMed  new medication that should be added to the database
      * @throws ValidationException if medication has invalid values
