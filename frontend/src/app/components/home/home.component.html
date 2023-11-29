@@ -2,7 +2,25 @@
   <h1 class="display-4">Welcome to MediTrack!</h1>
   <hr class="my-4">
   <a *ngIf="!authService.isLoggedIn()" class="btn btn-primary btn-lg" routerLink="/login" role="button">Login</a>
-  <div *ngIf="authService.isLoggedIn()">
-    <a routerLink="/add-meds" class="btn btn-primary btn-lg" role="button">Add Medication</a>
+  <div *ngIf="authService.isLoggedIn()" class="d-flex justify-content-center">
+    <div class="d-flex flex-wrap">
+      <app-main-button title="Track your Meds"
+                       refersTo="add-meds"
+                       buttonIcon="btn-add"
+                       class="col-lg-4 m-2">
+      </app-main-button>
+      <app-main-button title="Calendar"
+                       buttonIcon="btn-calendar"
+                       class="col-lg-4 m-2">
+      </app-main-button>
+      <app-main-button title="Stats & Insights"
+                       buttonIcon="btn-stats"
+                       class="col-lg-4 m-2">
+      </app-main-button>
+      <app-main-button title="Profile / Settings"
+                       buttonIcon="btn-profile"
+                       class="col-lg-4 m-2">
+      </app-main-button>
+    </div>
   </div>
 </div>
