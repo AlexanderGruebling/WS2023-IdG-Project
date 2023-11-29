@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import java.util.Set;
 
 @Entity
@@ -26,6 +27,13 @@ public class Medication {
 
     @Column(nullable = true, length = 100)
     private double frequency;
+
+    @ManyToOne
+    @JoinColumn(
+        nullable = false,
+        name = "user_id"
+    )
+    private ApplicationUser user;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(

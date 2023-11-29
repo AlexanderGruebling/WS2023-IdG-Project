@@ -2,7 +2,6 @@ package isg.meditrack.endpoint;
 
 
 import isg.meditrack.endpoint.dto.MedicationDto;
-import isg.meditrack.endpoint.dto.RegistrationDto;
 import isg.meditrack.endpoint.mapper.MedicationMapper;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
