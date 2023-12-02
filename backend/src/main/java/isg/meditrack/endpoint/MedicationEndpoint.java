@@ -58,4 +58,17 @@ public class MedicationEndpoint {
             throw new ResponseStatusException(status, e.getMessage(), e);
         }
     }
+
+    @GetMapping()
+    @Secured("ROLE_USER")
+    public List<MedicationDto> getForUser() {
+        LOGGER.info("GET " + BASE_PATH);
+
+        try {
+            return medicationMapper.medicationListToMedicationDtoList(medicationService.getByUser());
+        } catch (NotFoundException e) {
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            throw new ResponseStatusException(status, e.getMessage(), e);
+        }
+    }
 }

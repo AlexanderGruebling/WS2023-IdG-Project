@@ -5,12 +5,14 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class EntryDto {
+
+    private Long entryId;
+
     @NotNull
     private LocalDateTime date;
 
     private List<EffectDto> effects;
 
-    @NotNull
     private List<Long> medIds;
 
     public List<EffectDto> getEffects() {

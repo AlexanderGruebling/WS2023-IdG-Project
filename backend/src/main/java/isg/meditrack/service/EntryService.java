@@ -24,4 +24,9 @@ public interface EntryService {
      * @throws NotFoundException if medication with given id doesn't exist
      */
     Entry getById(Long id) throws NotFoundException;
+
+    /**
+     * Get all entries for the user sending the request.
+     */
+    List<Entry> getByUser();
 }

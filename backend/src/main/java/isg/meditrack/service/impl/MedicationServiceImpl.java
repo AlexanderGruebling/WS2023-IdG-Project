@@ -1,5 +1,6 @@
 package isg.meditrack.service.impl;
 
+import isg.meditrack.entity.ApplicationUser;
 import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 @Service
 public class MedicationServiceImpl implements MedicationService {
@@ -48,9 +50,18 @@ public class MedicationServiceImpl implements MedicationService {
     public Medication getById(Long id) throws NotFoundException {
         LOGGER.debug("Get medication {}", id);
         if (!medicationRepository.existsById(id)) {
-            throw new NotFoundException("User with given Id doesnt exist");
+            throw new NotFoundException("Medication with given Id doesnt exist");
         } else {
             return medicationRepository.getReferenceById(id);
         }
+    }
+
+    @Override
+    public List<Medication> getByUser() {
+        LOGGER.debug("Get medication by User");
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = userService.findApplicationUserByEmail(email).getId();
+
+        return medicationRepository.findAllByUserId(userId);
     }
 }

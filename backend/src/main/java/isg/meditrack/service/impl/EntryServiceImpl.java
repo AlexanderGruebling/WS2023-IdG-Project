@@ -58,12 +58,21 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public Entry getById(Long id) throws NotFoundException {
-        LOGGER.debug("Get medication {}", id);
+        LOGGER.debug("Get Entry {}", id);
 
         if (!entryRepository.existsById(id)) {
-            throw new NotFoundException("User with given Id doesnt exist");
+            throw new NotFoundException("Entry with given Id doesnt exist");
         } else {
             return entryRepository.getReferenceById(id);
         }
+    }
+
+    @Override
+    public List<Entry> getByUser() {
+        LOGGER.debug("Get all entries for user");
+
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = userService.findApplicationUserByEmail(email).getId();
+        return entryRepository.findAllByUserId(userId);
     }
 }

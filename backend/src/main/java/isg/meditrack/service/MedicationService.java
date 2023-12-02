@@ -5,6 +5,8 @@ import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
 
+import java.util.List;
+
 public interface MedicationService {
 
     /**
@@ -22,4 +24,11 @@ public interface MedicationService {
      * @throws NotFoundException if medication with given id doesn't exist
      */
     Medication getById(Long id) throws NotFoundException;
+
+    /**
+     * Get all medications for the user sending the request
+     *
+     * @throws NotFoundException if the user does not exist
+     */
+    List<Medication> getByUser();
 }
