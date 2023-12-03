@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository public interface EntryRepository extends JpaRepository<Entry, Long> {
-    @Query("SELECT e FROM Entry e WHERE e.user.id = :userId")
+    @Query("SELECT e FROM Entry e WHERE e.user.id = ?1")
     List<Entry> findAllByUserId(Long userId);
 }

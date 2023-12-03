@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository public interface MedicationRepository extends JpaRepository<Medication, Long> {
-    @Query("SELECT m FROM Medication m WHERE m.user.id = :userId")
+    @Query("SELECT m FROM Medication m WHERE m.user.id = ?1")
     List<Medication> findAllByUserId(Long userId);
 }
