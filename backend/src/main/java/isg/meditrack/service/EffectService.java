@@ -2,6 +2,9 @@ package isg.meditrack.service;
 
 import isg.meditrack.entity.Effect;
 import isg.meditrack.entity.Entry;
+import isg.meditrack.exception.NotFoundException;
+
+import java.util.List;
 
 public interface EffectService {
 
@@ -12,4 +15,23 @@ public interface EffectService {
      * @param entry  the entry the effect is linked to
      */
     Effect create(Effect newEff, Entry entry);
+
+    /**
+     * Get all effects for a specific medication
+     * @param medId ID of the medication
+     */
+    List<Effect> getByMedication(Long medId);
+
+    /**
+     * Get all effects for a specific entry
+     * @param entryId ID of the entry
+     */
+    List<Effect> getByEntry(Long entryId);
+
+    /**
+     * Get an effect with a certain id.
+     *
+     * @param id  id of the effect that is looked for
+     */
+    Effect getById(Long id);
 }

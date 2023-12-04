@@ -6,6 +6,7 @@ import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.repository.EffectRepository;
 import isg.meditrack.service.EffectService;
+import isg.meditrack.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.context.SecurityContextHolder;

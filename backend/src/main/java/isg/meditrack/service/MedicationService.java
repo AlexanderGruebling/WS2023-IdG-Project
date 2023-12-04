@@ -28,7 +28,6 @@ public interface MedicationService {
     /**
      * Get all medications for the user sending the request
      *
-     * @throws NotFoundException if the user does not exist
      */
     List<Medication> getByUser();
 }
