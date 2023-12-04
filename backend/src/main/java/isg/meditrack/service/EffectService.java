@@ -17,13 +17,15 @@ public interface EffectService {
     Effect create(Effect newEff, Entry entry);
 
     /**
-     * Get all effects for a specific medication
+     * Get all effects for a specific medication.
+     *
      * @param medId ID of the medication
      */
     List<Effect> getByMedication(Long medId);
 
     /**
-     * Get all effects for a specific entry
+     * Get all effects for a specific entry.
+     *
      * @param entryId ID of the entry
      */
     List<Effect> getByEntry(Long entryId);

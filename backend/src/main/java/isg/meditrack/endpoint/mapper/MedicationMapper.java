@@ -10,6 +10,8 @@ import java.util.List;
 public interface MedicationMapper {
 
     Medication medicationDtoToMedication(MedicationDto medicationDto);
+
     MedicationDto medicationToMedicationDto(Medication medication);
+
     List<MedicationDto> medicationListToMedicationDtoList(List<Medication> byUser);
 }

@@ -21,8 +21,7 @@ public class EffectServiceImpl implements EffectService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final EffectRepository effectRepository;
 
-    public EffectServiceImpl (EffectRepository effectRepository)
-    {
+    public EffectServiceImpl(EffectRepository effectRepository) {
         this.effectRepository = effectRepository;
     }
 
