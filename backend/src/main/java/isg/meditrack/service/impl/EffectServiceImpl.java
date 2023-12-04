@@ -47,6 +47,7 @@ public class EffectServiceImpl implements EffectService {
 
         return effectRepository.findAllByMedId(medId);
     }
+
     @Override
     public List<Effect> getByEntry(Long entryId) {
         LOGGER.debug("Get effects by Entry");

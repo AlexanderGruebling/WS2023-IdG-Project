@@ -26,7 +26,7 @@ public interface MedicationService {
     Medication getById(Long id) throws NotFoundException;
 
     /**
-     * Get all medications for the user sending the request
+     * Get all medications for the user sending the request.
      *
      */
     List<Medication> getByUser();

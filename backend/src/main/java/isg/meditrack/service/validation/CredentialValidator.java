@@ -55,18 +55,18 @@ public class CredentialValidator {
         LOGGER.debug("Validate credentials for Creation {}", medication);
         List<String> validationErrors = new ArrayList<>();
 
-        if(medication.getName() == null) {
+        if (medication.getName() == null) {
             validationErrors.add("Name must not be null");
         }
-        if (medication.getName().length() > 100){
+        if (medication.getName().length() > 100) {
             validationErrors.add("Name too long: longer than 100 characters");
         }
 
-        if (medication.getDosage() < 0){
+        if (medication.getDosage() < 0) {
             validationErrors.add("Dosis must not be negative");
         }
 
-        if (medication.getFrequency() < 0.0){
+        if (medication.getFrequency() < 0.0) {
             validationErrors.add("Frequency must not be negative");
         }
 

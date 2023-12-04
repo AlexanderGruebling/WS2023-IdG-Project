@@ -29,11 +29,10 @@ public class EntryServiceImpl implements EntryService {
     private final MedicationService medicationService;
     private final UserService userService;
 
-    public EntryServiceImpl (EntryRepository entryRepository,
+    public EntryServiceImpl(EntryRepository entryRepository,
                              EffectService effectService,
                              MedicationService medicationService,
-                             UserService userService)
-    {
+                             UserService userService) {
         this.entryRepository = entryRepository;
         this.effectService = effectService;
         this.medicationService = medicationService;
@@ -47,7 +46,7 @@ public class EntryServiceImpl implements EntryService {
 
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         newEntry.setUser(userService.findApplicationUserByEmail(email));
-        for (Long id: medIds) {
+        for (Long id : medIds) {
             newEntry.getUsedMedication().add(medicationService.getById(id));
         }
 

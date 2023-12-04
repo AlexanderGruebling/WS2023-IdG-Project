@@ -26,8 +26,7 @@ public class MedicationServiceImpl implements MedicationService {
 
     public MedicationServiceImpl(MedicationRepository medicationRepository,
                                  CredentialValidator credentialValidator,
-                                 UserService userService)
-    {
+                                 UserService userService) {
         this.medicationRepository = medicationRepository;
         this.validator = credentialValidator;
         this.userService = userService;
