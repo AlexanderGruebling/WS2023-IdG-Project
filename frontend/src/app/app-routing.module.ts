@@ -7,6 +7,7 @@ import {AuthGuard} from './guards/auth.guard';
 import {RegistrationComponent} from './components/registration/registration.component';
 import {ProfileComponent} from './components/profile/profile.component';
 import {AddEntryComponent} from './components/add-entry/add-entry.component';
+import {StatsComponent} from './components/stats/stats.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,7 +15,8 @@ const routes: Routes = [
   {path: 'registration', component: RegistrationComponent},
   {path: 'profile', component: ProfileComponent},
   {path: 'add-meds', component: AddMedsComponent},
-  {path: 'add-entry', component: AddEntryComponent}
+  {path: 'add-entry', component: AddEntryComponent},
+  {path: 'stats', component: StatsComponent},
 ];
 
 @NgModule({
