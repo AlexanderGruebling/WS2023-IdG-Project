@@ -12,6 +12,7 @@ import {LoginComponent} from './components/login/login.component';
 import {AddMedsComponent} from './components/add-meds/add-meds.component';
 import {AddMedComponent} from './components/add-med/add-med.component';
 import {AddEntryComponent} from './components/add-entry/add-entry.component';
+import {AddEffectComponent} from './components/add-entry/add-effect/add-effect.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {httpInterceptorProviders} from './interceptors';
 import {RegistrationComponent} from './components/registration/registration.component';
@@ -35,6 +36,7 @@ import { MainButtonComponent } from './components/home/main-button/main-button.c
     AddMedComponent,
     MainButtonComponent,
     AddEntryComponent,
+    AddEffectComponent,
   ],
   imports: [
     BrowserModule,

@@ -21,4 +21,7 @@ export class MedicationService {
   create(med: Medication): Observable<Medication> {
     return this.http.post<Medication>(baseUri, med);
   }
+  getForUser(): Observable<Medication[]> {
+    return this.http.get<Medication[]>(baseUri);
+  }
 }
