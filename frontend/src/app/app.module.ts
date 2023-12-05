@@ -21,6 +21,9 @@ import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NgxMaskModule} from 'ngx-mask';
 import { MainButtonComponent } from './components/home/main-button/main-button.component';
+import { StatsComponent } from './components/stats/stats.component';
+import { MixedChartComponent } from './components/stats/mixed-chart/mixed-chart.component';
+import { BarChartComponent } from './components/stats/bar-chart/bar-chart.component';
 
 
 @NgModule({
@@ -37,6 +40,9 @@ import { MainButtonComponent } from './components/home/main-button/main-button.c
     MainButtonComponent,
     AddEntryComponent,
     AddEffectComponent,
+    StatsComponent,
+    MixedChartComponent,
+    BarChartComponent,
   ],
   imports: [
     BrowserModule,
