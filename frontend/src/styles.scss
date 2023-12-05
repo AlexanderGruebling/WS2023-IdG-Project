@@ -5,3 +5,20 @@ body {
 .btn-primary {
   background-color: #086111;
 }
+
+/*
+@import "variables";    // here your variables
+
+// mandatory imports from bootstrap src
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables"; // here bootstrap variables
+@import "../node_modules/bootstrap/scss/mixins";
+
+// optional imports from bootstrap (do not import 'bootstrap.scss'!)
+@import "../node_modules/bootstrap/scss/root";
+@import "../node_modules/bootstrap/scss/reboot";
+@import "../node_modules/bootstrap/scss/type";
+
+ */
+
+

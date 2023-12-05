@@ -6,6 +6,8 @@ import {AuthService} from '../../services/auth.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Title} from '@angular/platform-browser';
 import {ToastrService} from 'ngx-toastr';
+import {Medication} from '../../dtos/Medication';
+import {MedicationService} from '../../services/medication.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +21,7 @@ export class ProfileComponent implements OnInit {
     email: '',
     password: ''
   };
+  medications: Medication[] = [];
 
   constructor(
     private titleService: Title,
@@ -27,7 +30,8 @@ export class ProfileComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private notification: ToastrService
+    private notification: ToastrService,
+    private medicationService: MedicationService,
   ) {
     titleService.setTitle('Profile');
   }
@@ -40,6 +44,7 @@ export class ProfileComponent implements OnInit {
         this.profile.username = data.username;
         this.profile.email = data.email;
       },);
+      this.fetchMeds();
     }
   }
 
@@ -69,6 +74,15 @@ export class ProfileComponent implements OnInit {
 
   public openModal(profileDeleteWindow) {
     this.modalService.open(profileDeleteWindow, {backdrop: 'static',size: 'lg'});
+  }
+  fetchMeds(): void {
+    this.medicationService.getForUser().subscribe({
+      next: data => {
+        this.medications = data;
+      }, error: err => {
+        console.log(err);
+      }
+    });
   }
 
 }
