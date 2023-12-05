@@ -5,9 +5,38 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-5">
+    <ul class="navbar-nav">
       <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
-      <a class="nav-link" *ngIf="authService.isLoggedIn()" routerLink="/" (click)="authService.logoutUser()">Logout</a>
+
+      <!-- Stats Page -->
+      <button class="btn bg-white rounded-circle me-3"
+              role="button"
+              routerLink="/stats">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" [attr.d]="statsIcon"/>
+        </svg>
+      </button>
+
+      <!-- Profile Dropdown-->
+      <div class="dropdown" *ngIf="authService.isLoggedIn()" ngbDropdown>
+        <button class="btn bg-white rounded-circle dropdown-toggle"
+                role="button"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ngbDropdownToggle>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" [attr.d]="profileIcon"/>
+          </svg>
+        </button>
+        <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item" routerLink="/" (click)="authService.logoutUser()">Logout</a>
+          <a class="dropdown-item" routerLink="/profile">Profile</a>
+        </div>
+      </div>
+
     </ul>
     <ul class="navbar-nav mr-5">
       <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/registration" routerLinkActive="active">Registration</a>
