@@ -10,6 +10,7 @@
 
       <!-- Stats Page -->
       <button class="btn bg-white rounded-circle me-3"
+              *ngIf="authService.isLoggedIn()"
               role="button"
               routerLink="/stats">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi" viewBox="0 0 16 16">
