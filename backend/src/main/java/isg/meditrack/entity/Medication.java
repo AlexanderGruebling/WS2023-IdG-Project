@@ -74,4 +74,9 @@ public class Medication {
     public void setUser(ApplicationUser user) {
         this.user = user;
     }
+
+    public Long getId() {
+        return id;
+    }
+
 }
