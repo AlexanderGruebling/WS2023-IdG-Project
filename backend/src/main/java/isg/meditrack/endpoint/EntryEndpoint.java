@@ -3,13 +3,13 @@ package isg.meditrack.endpoint;
 
 import isg.meditrack.endpoint.dto.EffectDto;
 import isg.meditrack.endpoint.dto.EntryDto;
-import isg.meditrack.endpoint.dto.MedicationDto;
 import isg.meditrack.endpoint.mapper.EntryMapper;
 import isg.meditrack.endpoint.mapper.EffectMapper;
 import isg.meditrack.entity.Entry;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.service.EffectService;
 import isg.meditrack.service.EntryService;
+import isg.meditrack.service.MedicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.annotation.security.PermitAll;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -34,14 +33,16 @@ public class EntryEndpoint {
     private final EffectMapper effectMapper;
     private final EntryService entryService;
     private final EffectService effectService;
+    private final MedicationService medicationService;
     static final String BASE_PATH = "/api/v1/entry";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    public EntryEndpoint(EntryService entryService, EffectService effectService, EntryMapper entryMapper, EffectMapper effectMapper) {
+    public EntryEndpoint(EntryService entryService, EffectService effectService, EntryMapper entryMapper, EffectMapper effectMapper, MedicationService medicationService) {
         this.entryMapper = entryMapper;
         this.effectMapper = effectMapper;
         this.entryService = entryService;
         this.effectService = effectService;
+        this.medicationService = medicationService;
     }
 
 
@@ -52,7 +53,7 @@ public class EntryEndpoint {
     public EntryDto create(@RequestBody EntryDto entryDto) {
         LOGGER.info("POST " + BASE_PATH);
 
-        Entry newEntry = entryService.create(entryMapper.entryDtoToEntry(entryDto), entryDto.getMedIds());
+        Entry newEntry = entryService.create(entryMapper.entryDtoToEntry(medicationService, entryDto), entryDto.getMedIds());
         for (EffectDto i : entryDto.getEffects()) {
             effectService.create(effectMapper.effectDtoToEffect(i), newEntry);
         }
