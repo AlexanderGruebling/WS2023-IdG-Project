@@ -3,10 +3,9 @@ package isg.meditrack.endpoint;
 
 import isg.meditrack.endpoint.dto.EffectDto;
 import isg.meditrack.endpoint.dto.EntryDto;
-import isg.meditrack.endpoint.mapper.EntryMapper;
 import isg.meditrack.endpoint.mapper.EffectMapper;
+import isg.meditrack.endpoint.mapper.EntryMapper;
 import isg.meditrack.entity.Entry;
-import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.service.EffectService;
 import isg.meditrack.service.EntryService;
@@ -15,19 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/entry")
@@ -37,7 +28,6 @@ public class EntryEndpoint {
     private final EffectMapper effectMapper;
     private final EntryService entryService;
     private final EffectService effectService;
-    private final MedicationService medicationService;
     static final String BASE_PATH = "/api/v1/entry";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -46,7 +36,6 @@ public class EntryEndpoint {
         this.effectMapper = effectMapper;
         this.entryService = entryService;
         this.effectService = effectService;
-        this.medicationService = medicationService;
     }
 
 

@@ -24,8 +24,6 @@ public class EntryServiceImpl implements EntryService {
     private final UserService userService;
 
     public EntryServiceImpl(EntryRepository entryRepository,
-                             EffectService effectService,
-                             MedicationService medicationService,
                              UserService userService) {
         this.entryRepository = entryRepository;
         this.userService = userService;
