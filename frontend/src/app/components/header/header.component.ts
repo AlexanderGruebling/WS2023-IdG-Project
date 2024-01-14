@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
-import {SVGService} from '../../services/SVGService';
 
 @Component({
   selector: 'app-header',
@@ -8,17 +7,12 @@ import {SVGService} from '../../services/SVGService';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  profileIcon = '';
-  statsIcon = '';
 
   constructor(
-    public authService: AuthService,
-    private svgService: SVGService,
+    public authService: AuthService
   ) { }
 
   ngOnInit() {
-    this.profileIcon = this.svgService.getIcon('btn-profile');
-    this.statsIcon = this.svgService.getIcon('btn-stats');
   }
 
 }

@@ -13,9 +13,7 @@
               *ngIf="authService.isLoggedIn()"
               role="button"
               routerLink="/stats">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" [attr.d]="statsIcon"/>
-        </svg>
+        <i class="bi bi-bar-chart"></i>
       </button>
 
       <!-- Profile Dropdown-->
@@ -28,9 +26,7 @@
                 aria-haspopup="true"
                 aria-expanded="false"
                 ngbDropdownToggle>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" [attr.d]="profileIcon"/>
-          </svg>
+          <i class="bi bi-person-circle"></i>
         </button>
         <div ngbDropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <a class="dropdown-item" routerLink="/" (click)="authService.logoutUser()">Logout</a>

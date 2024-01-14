@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SVGService} from '../../../services/SVGService';
 
 @Component({
   selector: 'app-main-button',
@@ -12,10 +11,9 @@ export class MainButtonComponent implements OnInit {
   @Input() buttonIcon = '';
   public icon = '';
 
-  constructor(public svgService: SVGService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.icon = this.svgService.getIcon(this.buttonIcon);
   }
 
 }
