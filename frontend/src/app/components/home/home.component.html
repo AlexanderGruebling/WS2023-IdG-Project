@@ -3,25 +3,20 @@
   <hr class="my-4">
   <a *ngIf="!authService.isLoggedIn()" class="btn btn-primary btn-lg" routerLink="/login" role="button">Login</a>
   <div *ngIf="authService.isLoggedIn()" class="d-flex justify-content-center">
-    <div class="d-flex flex-wrap">
+    <div class="d-flex flex-wrap justify-content-center">
       <app-main-button title="Track your Meds"
                        refersTo="add-entry"
                        buttonIcon="calendar-plus"
-                       class="col-lg-4 m-2">
+                       class="col-lg-3 m-2">
       </app-main-button>
       <app-main-button title="Calendar"
                        buttonIcon="calendar-date"
-                       class="col-lg-4 m-2">
+                       class="col-lg-3 m-2">
       </app-main-button>
       <app-main-button title="Stats & Insights"
                        refersTo="stats"
                        buttonIcon="bar-chart"
-                       class="col-lg-4 m-2">
-      </app-main-button>
-      <app-main-button title="Profile / Settings"
-                       buttonIcon="person-circle"
-                       refersTo="/profile"
-                       class="col-lg-4 m-2">
+                       class="col-lg-3 m-2">
       </app-main-button>
     </div>
   </div>
