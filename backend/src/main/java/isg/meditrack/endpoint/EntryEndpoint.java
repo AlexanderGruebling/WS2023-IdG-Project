@@ -6,6 +6,7 @@ import isg.meditrack.endpoint.dto.EntryDto;
 import isg.meditrack.endpoint.mapper.EntryMapper;
 import isg.meditrack.endpoint.mapper.EffectMapper;
 import isg.meditrack.entity.Entry;
+import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.service.EffectService;
 import isg.meditrack.service.EntryService;
@@ -24,6 +25,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.invoke.MethodHandles;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/v1/entry")
@@ -53,9 +57,14 @@ public class EntryEndpoint {
     public EntryDto create(@RequestBody EntryDto entryDto) {
         LOGGER.info("POST " + BASE_PATH);
 
-        Entry newEntry = entryService.create(entryMapper.entryDtoToEntry(medicationService, entryDto), entryDto.getMedIds());
+        Entry newEntry = entryService.create(entryMapper.entryDtoToEntry(entryDto));
         for (EffectDto i : entryDto.getEffects()) {
-            effectService.create(effectMapper.effectDtoToEffect(i), newEntry);
+            try {
+                effectService.create(effectMapper.effectDtoToEffect(i), newEntry);
+            } catch (NotFoundException e) {
+                HttpStatus status = HttpStatus.NOT_FOUND;
+                throw new ResponseStatusException(status, e.getMessage(), e);
+            }
         }
 
         return entryMapper.entryToEntryDto(newEntry);

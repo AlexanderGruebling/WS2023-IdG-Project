@@ -30,4 +30,20 @@ public class EntryDto {
     public void setMedIds(List<Long> medIds) {
         this.medIds = medIds;
     }
+
+    public Long getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(Long entryId) {
+        this.entryId = entryId;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 }

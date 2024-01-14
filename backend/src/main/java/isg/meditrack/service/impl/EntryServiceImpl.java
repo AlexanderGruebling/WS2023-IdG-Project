@@ -1,11 +1,8 @@
 package isg.meditrack.service.impl;
 
-import isg.meditrack.entity.Effect;
 import isg.meditrack.entity.Entry;
-import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.repository.EntryRepository;
-import isg.meditrack.repository.MedicationRepository;
 import isg.meditrack.service.EffectService;
 import isg.meditrack.service.EntryService;
 import isg.meditrack.service.MedicationService;
@@ -16,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,8 +21,6 @@ public class EntryServiceImpl implements EntryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final EntryRepository entryRepository;
-    private final EffectService effectService;
-    private final MedicationService medicationService;
     private final UserService userService;
 
     public EntryServiceImpl(EntryRepository entryRepository,
@@ -34,21 +28,16 @@ public class EntryServiceImpl implements EntryService {
                              MedicationService medicationService,
                              UserService userService) {
         this.entryRepository = entryRepository;
-        this.effectService = effectService;
-        this.medicationService = medicationService;
         this.userService = userService;
     }
 
 
     @Override
-    public Entry create(Entry newEntry, List<Long> medIds) {
+    public Entry create(Entry newEntry) {
         LOGGER.debug("Create new entry {}", newEntry);
 
         String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         newEntry.setUser(userService.findApplicationUserByEmail(email));
-        for (Long id : medIds) {
-            newEntry.getUsedMedication().add(medicationService.getById(id));
-        }
 
         newEntry = entryRepository.save(newEntry);
 

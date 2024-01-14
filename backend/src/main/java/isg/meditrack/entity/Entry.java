@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -28,7 +29,7 @@ public class Entry {
     private ApplicationUser user;
 
     @ManyToMany(mappedBy = "usedIn", fetch = FetchType.LAZY)
-    private Set<Medication> usedMedication;
+    private Set<Medication> usedMedication = new HashSet<>();
 
     public Entry() {
     }

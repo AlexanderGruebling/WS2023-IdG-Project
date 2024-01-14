@@ -5,7 +5,7 @@ export class Entry {
     public entryId: number,
     public date: Date,
     public effects: Effect[],
-    public medId: number[],
+    public medIds: number[],
   ) {
   }
 }
