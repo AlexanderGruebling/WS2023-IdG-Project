@@ -15,7 +15,10 @@ public interface EntryMapper {
     @Mapping(target = "date", source = "entryDto.date")
     Entry entryDtoToEntry(EntryDto entryDto);
 
+    @Mapping(target = "entryId", source = "id")
+    @Mapping(target = "medIds", source = "usedMedication", qualifiedByName = "getMedIds")
     EntryDto entryToEntryDto(Entry entry);
 
+    @Mapping(target = "medIds", source = "used_in")
     List<EntryDto> entryListToEntryDtoList(List<Entry> entries);
 }

@@ -28,7 +28,7 @@ public class Entry {
     )
     private ApplicationUser user;
 
-    @ManyToMany(mappedBy = "usedIn", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "usedIn", fetch = FetchType.EAGER)
     private Set<Medication> usedMedication = new HashSet<>();
 
     public Entry() {

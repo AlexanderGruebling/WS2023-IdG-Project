@@ -25,6 +25,9 @@ import { StatsComponent } from './components/stats/stats.component';
 import { MixedChartComponent } from './components/stats/mixed-chart/mixed-chart.component';
 import { BarChartComponent } from './components/stats/bar-chart/bar-chart.component';
 
+import {FullCalendarModule} from '@fullcalendar/angular';
+import { CalendarComponent } from './components/calendar/calendar.component';
+
 
 @NgModule({
   declarations: [
@@ -43,6 +46,7 @@ import { BarChartComponent } from './components/stats/bar-chart/bar-chart.compon
     StatsComponent,
     MixedChartComponent,
     BarChartComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +58,7 @@ import { BarChartComponent } from './components/stats/bar-chart/bar-chart.compon
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     NgxMaskModule.forRoot(),
+    FullCalendarModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

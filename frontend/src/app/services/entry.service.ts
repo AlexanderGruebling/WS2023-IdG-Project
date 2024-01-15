@@ -16,4 +16,7 @@ export class EntryService {
   create(entry: Entry): Observable<Entry> {
     return this.http.post<Entry>(baseUri, entry);
   }
+  getForUser(): Observable<Entry[]> {
+    return this.http.get<Entry[]>(baseUri);
+  }
 }

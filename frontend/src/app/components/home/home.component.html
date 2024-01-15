@@ -2,7 +2,7 @@
   <h1 class="display-4">Welcome to MediTrack!</h1>
   <hr class="my-4">
   <a *ngIf="!authService.isLoggedIn()" class="btn btn-primary btn-lg" routerLink="/login" role="button">Login</a>
-  <div *ngIf="authService.isLoggedIn()" class="d-flex justify-content-center">
+  <div *ngIf="authService.isLoggedIn()" class="d-flex flex-column justify-content-center">
     <div class="d-flex flex-wrap justify-content-center">
       <app-main-button title="Track your Meds"
                        refersTo="add-entry"
@@ -10,6 +10,7 @@
                        class="col-lg-3 m-2">
       </app-main-button>
       <app-main-button title="Calendar"
+                       refersTo="calendar"
                        buttonIcon="calendar-date"
                        class="col-lg-3 m-2">
       </app-main-button>
@@ -19,5 +20,6 @@
                        class="col-lg-3 m-2">
       </app-main-button>
     </div>
+    <h2 class="h4 mt-2">Your Week so far:</h2>
   </div>
 </div>

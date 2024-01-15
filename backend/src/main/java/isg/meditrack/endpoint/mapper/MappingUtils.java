@@ -41,4 +41,9 @@ public class MappingUtils {
         }
         return med.get();
     }
+
+    @Named("getMedIds")
+    public List<Long> getMedIds(Set<Medication> usedMedications) {
+        return usedMedications.stream().map(Medication::getId).collect(Collectors.toList());
+    }
 }
