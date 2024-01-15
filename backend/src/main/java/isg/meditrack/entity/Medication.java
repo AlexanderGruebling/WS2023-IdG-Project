@@ -35,12 +35,7 @@ public class Medication {
     )
     private ApplicationUser user;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(
-        name = "medication_used",
-        joinColumns = @JoinColumn(name = "med_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "entry_id", referencedColumnName = "id")
-    )
+    @ManyToMany(mappedBy = "usedMedication", fetch = FetchType.EAGER)
     private Set<Entry> usedIn;
 
     public String getName() {

@@ -1,14 +1,6 @@
 package isg.meditrack.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,8 +20,13 @@ public class Entry {
     )
     private ApplicationUser user;
 
-    @ManyToMany(mappedBy = "usedIn", fetch = FetchType.EAGER)
-    private Set<Medication> usedMedication = new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.MERGE})
+    @JoinTable(
+        name = "medication_used",
+        joinColumns = @JoinColumn(name = "entry_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(name = "med_id", referencedColumnName = "id")
+    )
+    private Set<Medication> usedMedication;
 
     public Entry() {
     }
