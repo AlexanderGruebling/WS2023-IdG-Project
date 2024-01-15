@@ -3,6 +3,7 @@ package isg.meditrack.endpoint;
 import isg.meditrack.endpoint.dto.RegistrationDto;
 import isg.meditrack.endpoint.mapper.UserMapper;
 import isg.meditrack.exception.ValidationException;
+import isg.meditrack.service.MedicationService;
 import isg.meditrack.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,15 +23,17 @@ import java.lang.invoke.MethodHandles;
 @RequestMapping(value = "/api/v1/registration")
 public class RegistrationEndpoint {
     private final UserService userService;
+    private final MedicationService medicationService;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     static final String BASE_PATH = "/api/v1/registration";
 
-    public RegistrationEndpoint(UserService userService, UserMapper userMapper, PasswordEncoder passwordEncoder) {
+    public RegistrationEndpoint(UserService userService, MedicationService medicationService, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.medicationService = medicationService;
     }
 
     @PermitAll
@@ -41,7 +44,9 @@ public class RegistrationEndpoint {
         String encodedPassword = passwordEncoder.encode(registrationDto.getPassword());
         registrationDto.setPassword(encodedPassword);
         try {
-            return userService.register(userMapper.registrationDtoToApplicationUser(registrationDto));
+            String jwtToken = userService.register(userMapper.registrationDtoToApplicationUser(registrationDto));
+            medicationService.createOnRegister(registrationDto.getEmail());
+            return jwtToken;
         } catch (ValidationException e) {
             HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
             throw new ResponseStatusException(status, e.getMessage(), e);
