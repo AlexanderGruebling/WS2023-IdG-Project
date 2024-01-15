@@ -23,6 +23,7 @@
             [(ngModel)]="date"
             ngbDatepicker
             #d="ngbDatepicker"
+            (ngModelChange)="updateEntryModel()"
           />
           <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
         </div>

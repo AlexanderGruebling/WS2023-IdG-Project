@@ -5,6 +5,7 @@ import {Effect} from '../../dtos/effect';
 import {EntryService} from '../../services/entry.service';
 import {EffectService} from '../../services/effect.service';
 import {Entry} from '../../dtos/entry';
+import {NgbCalendar, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-add-entry',
@@ -16,19 +17,23 @@ export class AddEntryComponent implements OnInit {
   selectedMedications: Medication[] = [];
   selectedMedIds: number[] = [];
   effects: Effect[] = [];
-  date: string = new Date().toISOString();
+  //date: string = new Date().toISOString();
+  date: NgbDateStruct;
   hideOtherSideEffect = false;
   effectsForUser: string[] = [];
   customEffect: string = null;
   currentMed: Medication;
-  entry: Entry = new Entry(null, new Date(this.date), [], this.selectedMedIds);
+  entry: Entry;
 
   constructor(
     private medicationService: MedicationService,
     private entryService: EntryService,
-    private effectService: EffectService) { }
+    private effectService: EffectService,
+    private calendar: NgbCalendar) { }
 
   ngOnInit(): void {
+    this.date = this.calendar.getToday();
+    this.entry = new Entry(null, new Date(this.date.year, this.date.month - 1, this.date.day), [], this.selectedMedIds);
     this.getForUser();
     this.getEffectsForMeds();
     console.log(this.date);
@@ -100,5 +105,8 @@ export class AddEntryComponent implements OnInit {
       this.selectedMedications.push(medication);
     }
     this.entry.medIds = this.selectedMedications.map(x => x.medId);
+  }
+  updateEntryModel(): void {
+    this.entry.date = new Date(this.date.year, this.date.month - 1, this.date.day);
   }
 }
