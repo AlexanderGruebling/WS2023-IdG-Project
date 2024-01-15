@@ -26,4 +26,9 @@ public interface EntryService {
      * Get all entries for the user sending the request.
      */
     List<Entry> getByUser();
+
+    /**
+     * Get all entries for a medication.
+     */
+    List<Entry> getByMedId(Long medId);
 }

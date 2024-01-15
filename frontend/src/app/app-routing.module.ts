@@ -8,7 +8,7 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {ProfileComponent} from './components/profile/profile.component';
 import {AddEntryComponent} from './components/add-entry/add-entry.component';
 import {StatsComponent} from './components/stats/stats.component';
-import {CalendarComponent} from './components/calendar/calendar.component';
+//import {CalendarComponent} from './components/calendar/calendar.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,7 +18,7 @@ const routes: Routes = [
   {path: 'add-meds', component: AddMedsComponent},
   {path: 'add-entry', component: AddEntryComponent},
   {path: 'stats', component: StatsComponent},
-  {path: 'calendar', component: CalendarComponent},
+  //{path: 'calendar', component: CalendarComponent},
 ];
 
 @NgModule({

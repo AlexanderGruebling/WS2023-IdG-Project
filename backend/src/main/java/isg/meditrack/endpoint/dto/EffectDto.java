@@ -1,6 +1,8 @@
 package isg.meditrack.endpoint.dto;
 
+
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 public class EffectDto {
 
@@ -13,6 +15,7 @@ public class EffectDto {
     private boolean desired;
     @NotNull
     private long medId;
+    private LocalDateTime date;
 
 
     public String getName() {
@@ -53,5 +56,13 @@ public class EffectDto {
 
     public void setMedId(long medId) {
         this.medId = medId;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 }

@@ -36,4 +36,11 @@ public interface EffectService {
      * @param id  id of the effect that is looked for
      */
     Effect getById(Long id);
+
+    /**
+     * Get all effects for a specific name.
+     *
+     * @param name Name of the entry
+     */
+    List<Effect> getByName(String name);
 }

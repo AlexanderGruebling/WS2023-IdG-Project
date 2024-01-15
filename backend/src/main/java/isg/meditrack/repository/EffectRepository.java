@@ -14,4 +14,7 @@ import java.util.List;
 
     @Query("SELECT e FROM Effect e WHERE e.entry.id = ?1")
     List<Effect> findAllByEntryId(Long entryId);
+
+    @Query("SELECT e FROM Effect e WHERE e.name = ?1")
+    List<Effect> findAllByName(String name);
 }

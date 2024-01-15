@@ -59,4 +59,9 @@ public class EntryServiceImpl implements EntryService {
         Long userId = userService.findApplicationUserByEmail(email).getId();
         return entryRepository.findAllByUserId(userId);
     }
+
+    @Override
+    public List<Entry> getByMedId(Long medId) {
+        return null;
+    }
 }

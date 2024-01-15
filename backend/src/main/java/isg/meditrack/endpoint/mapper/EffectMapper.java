@@ -1,6 +1,7 @@
 package isg.meditrack.endpoint.mapper;
 
 import isg.meditrack.endpoint.dto.EffectDto;
+import isg.meditrack.endpoint.dto.PlotDataDto;
 import isg.meditrack.entity.Effect;
 import isg.meditrack.exception.NotFoundException;
 import org.mapstruct.Mapper;
@@ -17,4 +18,6 @@ public interface EffectMapper {
     EffectDto effectToEffectDto(Effect effect);
 
     List<EffectDto> effectListToEffectDtoList(List<Effect> effects);
+    
+    List<PlotDataDto> effectListToPlotDataDtoList(List<Effect> effects);
 }

@@ -2,6 +2,7 @@ package isg.meditrack.endpoint;
 
 
 import isg.meditrack.endpoint.dto.EffectDto;
+import isg.meditrack.endpoint.dto.PlotDataDto;
 import isg.meditrack.endpoint.mapper.EffectMapper;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.service.EffectService;
@@ -61,10 +62,23 @@ public class EffectEndpoint {
     @GetMapping("/entry/{entryId}")
     @Secured("ROLE_USER")
     public List<EffectDto> getForEntry(@PathVariable Long entryId) {
-        LOGGER.info("GET " + BASE_PATH + "/med/{}", entryId);
+        LOGGER.info("GET " + BASE_PATH + "/entry/{}", entryId);
 
         try {
             return effectMapper.effectListToEffectDtoList(effectService.getByEntry(entryId));
+        } catch (NotFoundException e) {
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            throw new ResponseStatusException(status, e.getMessage(), e);
+        }
+    }
+
+    @GetMapping("/intensities/{name}")
+    @Secured("ROLE_USER")
+    public List<PlotDataDto> getForName(@PathVariable String name) {
+        LOGGER.info("GET " + BASE_PATH + "/intensities/{}", name);
+
+        try {
+            return effectMapper.effectListToPlotDataDtoList(effectService.getByName(name));
         } catch (NotFoundException e) {
             HttpStatus status = HttpStatus.NOT_FOUND;
             throw new ResponseStatusException(status, e.getMessage(), e);
