@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Medication} from '../../dtos/Medication';
 import {MedicationService} from '../../services/medication.service';
 import {Effect} from '../../dtos/effect';
 import {EntryService} from '../../services/entry.service';
 import {EffectService} from '../../services/effect.service';
 import {Entry} from '../../dtos/entry';
-import {NgbCalendar, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCalendar, NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-entry',
@@ -13,11 +14,13 @@ import {NgbCalendar, NgbDateParserFormatter, NgbDateStruct} from '@ng-bootstrap/
   styleUrls: ['./add-entry.component.scss']
 })
 export class AddEntryComponent implements OnInit {
+  @ViewChild('noMedicationsWindow')
+  noMedicationsWindow: TemplateRef<any>;
   medicationsForUser: Medication[] = [];
   selectedMedications: Medication[] = [];
   selectedMedIds: number[] = [];
   effects: Effect[] = [];
-  //date: string = new Date().toISOString();
+  text = 'today';
   date: NgbDateStruct;
   hideOtherSideEffect = false;
   effectsForUser: string[] = [];
@@ -29,12 +32,13 @@ export class AddEntryComponent implements OnInit {
     private medicationService: MedicationService,
     private entryService: EntryService,
     private effectService: EffectService,
-    private calendar: NgbCalendar) { }
+    private calendar: NgbCalendar,
+    private toastr: ToastrService,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.date = this.calendar.getToday();
-    this.entry = new Entry(null, new Date(this.date.year, this.date.month - 1, this.date.day), [], this.selectedMedIds);
     this.getForUser();
+    console.log(this.currentMed);
     this.getEffectsForMeds();
     console.log(this.date);
   }
@@ -42,13 +46,18 @@ export class AddEntryComponent implements OnInit {
     console.log('called');
     this.medicationService.getForUser().subscribe({
       next: data => {
-        console.log(data);
-      this.medicationsForUser = data;
-      this.currentMed = this.medicationsForUser[0];
-      console.log(this.medicationsForUser);
+        this.medicationsForUser = data;
+        this.date = this.calendar.getToday();
+        this.entry = new Entry(null, new Date(this.date.year, this.date.month - 1, this.date.day), [], this.selectedMedIds);
+        this.currentMed = this.medicationsForUser[0];
+        if (this.medicationsForUser.length <= 0) {
+          // TODO: fix modal
+          this.modalService.open(this.noMedicationsWindow, {backdrop: 'static', size: 'lg'});
+        }
+        console.log(this.medicationsForUser);
     },
     error: err => {
-        console.log(err);
+        this.toastr.error('Error!', 'Please contact our administrator: ' + err.errors.toString());
     }
     });
   }
@@ -88,10 +97,10 @@ export class AddEntryComponent implements OnInit {
     console.log(this.entry);
     this.entryService.create(this.entry).subscribe({
         next: data => {
-          console.log('Successful');
+          this.toastr.success('Successful!', 'Entry was successfully created.');
         },
         error: err => {
-          console.log(err);
+          this.toastr.error('Error!', 'Please contact our administrator.');
         }
       }
     );

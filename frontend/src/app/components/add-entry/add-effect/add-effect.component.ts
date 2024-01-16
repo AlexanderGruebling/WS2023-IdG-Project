@@ -16,7 +16,7 @@ export class AddEffectComponent implements OnInit {
   constructor() {
   }
   ngOnInit() {
-    this.effect = new Effect(this.effectName, '', 0,false, this.currentMed.medId);
+    this.effect = new Effect(this.effectName, '', 0,false, this.currentMed !== undefined ? this.currentMed.medId : null);
   }
   addNewEffect() {
     this.effectEvent.emit(this.effect);

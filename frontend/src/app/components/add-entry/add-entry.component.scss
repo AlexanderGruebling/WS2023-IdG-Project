@@ -1,0 +1,6 @@
+@import "../../../variables";
+
+.form-check-input:checked {
+  background-color: $primary;
+  border-color: $primary;
+}
