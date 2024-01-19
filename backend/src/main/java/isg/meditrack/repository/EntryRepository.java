@@ -10,4 +10,7 @@ import java.util.List;
 @Repository public interface EntryRepository extends JpaRepository<Entry, Long> {
     @Query("SELECT e FROM Entry e WHERE e.user.id = ?1")
     List<Entry> findAllByUserId(Long userId);
+
+    @Query("SELECT e FROM Entry e WHERE e.user.id = ?1 ORDER BY e.date DESC")
+    List<Entry> findLastByUserId(Long userId);
 }

@@ -28,6 +28,11 @@ public interface EntryService {
     List<Entry> getByUser();
 
     /**
+     * Get the last entry for the user sending the request.
+     */
+    Entry getLastByUser();
+
+    /**
      * Get all entries for a medication.
      */
     List<Entry> getByMedId(Long medId);

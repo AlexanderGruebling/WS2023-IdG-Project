@@ -96,5 +96,10 @@ public class MedicationServiceImpl implements MedicationService {
         med5.setDosage(200);
         med5.setUser(userService.findApplicationUserByEmail(email));
         medicationRepository.save(med5);
+
+        Medication med6 = new Medication();
+        med6.setName("None");
+        med6.setUser(userService.findApplicationUserByEmail(email));
+        medicationRepository.save(med6);
     }
 }
