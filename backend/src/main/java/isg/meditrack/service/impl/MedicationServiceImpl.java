@@ -52,7 +52,7 @@ public class MedicationServiceImpl implements MedicationService {
         if (!medicationRepository.existsById(id)) {
             throw new NotFoundException("Medication with given Id doesnt exist");
         } else {
-            return medicationRepository.getReferenceById(id);
+            return medicationRepository.findByMedId(id);
         }
     }
 

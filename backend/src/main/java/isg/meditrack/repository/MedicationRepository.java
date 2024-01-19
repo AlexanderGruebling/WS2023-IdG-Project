@@ -10,4 +10,7 @@ import java.util.List;
 @Repository public interface MedicationRepository extends JpaRepository<Medication, Long> {
     @Query("SELECT m FROM Medication m WHERE m.user.id = ?1")
     List<Medication> findAllByUserId(Long userId);
+
+    @Query("SELECT m FROM Medication m WHERE m.id = ?1")
+   Medication findByMedId(Long userId);
 }
