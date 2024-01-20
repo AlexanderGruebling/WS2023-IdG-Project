@@ -1,5 +1,12 @@
 <h2>Stats & Infos</h2>
-<div class="d-flex flex-row">
-  <app-mixed-chart class="col-lg-6" title="Reported Sideeffects vs. Intake of Aspirin"></app-mixed-chart>
-  <app-bar-chart class="col-lg-6" title="Daily Intake of Aspirin"></app-bar-chart>
+<div class="d-flex flex-column">
+  <div class="chart-container" style="position: relative;">
+    <canvas  id="MyBarChart" >{{ chart }}</canvas>
+  </div>
+  <div>
+    <div class="form-check form-switch" *ngFor="let medication of meds">
+      <input class="form-check-input" type="checkbox" [id]="medication.name" (change)="updateCheckedMeds(medication)">
+      <label class="form-check-label" [for]="medication.name">{{ medication.name }}</label>
+    </div>
+  </div>
 </div>
