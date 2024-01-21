@@ -42,6 +42,20 @@ public class EntryServiceImpl implements EntryService {
     }
 
     @Override
+    public Entry update(Entry updatedEntry) {
+        LOGGER.debug("Update entry {}", updatedEntry);
+
+        Entry entryToUpdate = entryRepository.getReferenceById(updatedEntry.getId());
+
+        entryToUpdate.setDate(updatedEntry.getDate());
+        entryToUpdate.setUsedMedication(updatedEntry.getUsedMedication());
+
+        entryRepository.save(entryToUpdate);
+
+        return updatedEntry;
+    }
+
+    @Override
     public Entry getById(Long id) throws NotFoundException {
         LOGGER.debug("Get Entry {}", id);
 
@@ -73,5 +87,14 @@ public class EntryServiceImpl implements EntryService {
     @Override
     public List<Entry> getByMedId(Long medId) {
         return null;
+    }
+
+    @Override
+    public void delete(Long entryId) {
+        if (entryRepository.existsById(entryId)){
+            entryRepository.deleteById(entryId);
+        } else {
+            throw new NotFoundException("Entry with given Id doesnt exist");
+        }
     }
 }

@@ -1,6 +1,8 @@
 package isg.meditrack.endpoint;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import isg.meditrack.endpoint.dto.EffectDto;
 import isg.meditrack.endpoint.dto.EntryDto;
 import isg.meditrack.endpoint.mapper.EffectMapper;
@@ -14,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -57,6 +61,43 @@ public class EntryEndpoint {
         }
 
         return entryMapper.entryToEntryDto(newEntry);
+    }
+
+    @PutMapping
+    @Secured("ROLE_USER")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public EntryDto update(@RequestBody EntryDto entryDto) {
+        LOGGER.info("PUT " + BASE_PATH);
+
+        Entry entryToUpdate = entryService.update(entryMapper.entryDtoToEntry(entryDto));
+        for (EffectDto i : entryDto.getEffects()) {
+            try {
+                effectService.update(effectMapper.effectDtoToEffect(i), entryToUpdate);
+            } catch (NotFoundException e) {
+                HttpStatus status = HttpStatus.NOT_FOUND;
+                throw new ResponseStatusException(status, e.getMessage(), e);
+            }
+        }
+
+        return entryMapper.entryToEntryDto(entryToUpdate);
+    }
+
+    @DeleteMapping("/{entryId}")
+    @Transactional
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Secured("ROLE_USER")
+    public void delete(@PathVariable  Long entryId) {
+        LOGGER.info("DELETE " + BASE_PATH);
+        LOGGER.debug("delete()");
+
+        effectService.deleteForEntry(entryId);
+
+        try {
+            entryService.delete(entryId);
+        } catch (NotFoundException e) {
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            throw new ResponseStatusException(status, e.getMessage(), e);
+        }
     }
 
     @GetMapping()

@@ -72,6 +72,19 @@ export class ProfileComponent implements OnInit {
     return this.profile.email;
   }
 
+  deleteMedication(id): void {
+    this.medicationService.delete(id).subscribe({
+      next: () => {
+        this.notification.success(`Medication successfully deleted`);
+        this.fetchMeds();
+      },
+      error: error => {
+        console.error('Error deleting Med: ', error);
+        this.notification.error(error.error.error, error.error.message);
+      },
+    });
+  }
+
   public openModal(profileDeleteWindow) {
     this.modalService.open(profileDeleteWindow, {backdrop: 'static',size: 'lg'});
   }

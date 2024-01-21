@@ -44,4 +44,6 @@ public interface MedicationService {
      * Create default medications for a user after registering.
      */
     void createOnRegister(String email);
+
+    void delete(Long medId);
 }

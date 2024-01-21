@@ -40,6 +40,23 @@ public class EffectServiceImpl implements EffectService {
     }
 
     @Override
+    public Effect update(Effect updatedEff, Entry entry) {
+        LOGGER.debug("Update effect {}", updatedEff);
+
+        Effect effToUpdate = effectRepository.getReferenceById(updatedEff.getId());
+
+        effToUpdate.setDate(entry.getDate());
+        effToUpdate.setDescription(updatedEff.getDescription());
+        effToUpdate.setDesired(updatedEff.getDesired());
+        effToUpdate.setIntensity(updatedEff.getIntensity());
+        effToUpdate.setMedication(updatedEff.getMedication());
+
+        effectRepository.save(effToUpdate);
+
+        return updatedEff;
+    }
+
+    @Override
     public Effect getById(Long id) {
         LOGGER.debug("Get medication {}", id);
 
@@ -87,5 +104,12 @@ public class EffectServiceImpl implements EffectService {
 
 
         return effectRepository.findAllByName(name);
+    }
+
+    @Override
+    public void deleteForEntry(Long entryId) {
+        List<Effect> effects = getByEntry(entryId);
+
+        effectRepository.deleteAll(effects);
     }
 }

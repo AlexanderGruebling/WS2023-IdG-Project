@@ -91,6 +91,15 @@ public class MedicationServiceImpl implements MedicationService {
     }
 
     @Override
+    public void delete(Long entryId) {
+        if (medicationRepository.existsById(entryId)){
+            medicationRepository.deleteById(entryId);
+        } else {
+            throw new NotFoundException("Medication with given Id doesnt exist");
+        }
+    }
+
+    @Override
     @Transactional
     public void createOnRegister(String email) {
         Medication med1 = new Medication();

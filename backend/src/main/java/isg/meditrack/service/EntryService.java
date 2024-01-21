@@ -15,6 +15,13 @@ public interface EntryService {
     Entry create(Entry newEntry);
 
     /**
+     * Update an entry with a certain id.
+     *
+     * @param updatedEntry new entry that should be updated in the database
+     */
+    Entry update(Entry updatedEntry);
+
+    /**
      * Get an entry with a certain id.
      *
      * @param id  id of the entry that is looked for
@@ -36,4 +43,10 @@ public interface EntryService {
      * Get all entries for a medication.
      */
     List<Entry> getByMedId(Long medId);
+
+
+    /**
+     * Delete entry with certain id.
+     */
+    void delete(Long entryId);
 }

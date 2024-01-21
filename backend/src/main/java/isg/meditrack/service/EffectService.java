@@ -17,6 +17,14 @@ public interface EffectService {
     Effect create(Effect newEff, Entry entry);
 
     /**
+     * Create an effect with a certain id.
+     *
+     * @param updatedEff  new effect that should be added to the database
+     * @param entry  the entry the effect is linked to
+     */
+    Effect update(Effect updatedEff, Entry entry);
+
+    /**
      * Get all effects for a specific medication.
      *
      * @param medId ID of the medication
@@ -49,4 +57,11 @@ public interface EffectService {
      * @param name Name of the entry
      */
     List<Effect> getByName(String name);
+
+    /**
+     * Delete all effects of an entry
+     *
+     * @param entryId of the entry
+     */
+    void deleteForEntry(Long entryId);
 }

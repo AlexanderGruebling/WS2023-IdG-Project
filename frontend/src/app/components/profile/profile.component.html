@@ -80,6 +80,13 @@
                       <ul>
                         <li><strong>Dosage:</strong> {{ med.dosage }} mg</li>
                         <li><strong>Frequency:</strong> {{ med.frequency }} per day</li>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger"
+                                (click)="this.deleteMedication(med.medId);"
+                        >
+                          <i class="bi-trash"></i>
+                          Delete
+                        </button>
                       </ul>
                     </div>
                   </div>

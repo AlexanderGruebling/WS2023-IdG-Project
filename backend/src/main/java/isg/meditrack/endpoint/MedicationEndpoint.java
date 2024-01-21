@@ -12,13 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.lang.invoke.MethodHandles;
@@ -88,6 +83,22 @@ public class MedicationEndpoint {
 
         try {
             return medicationService.getDosagePlotData(name);
+        } catch (NotFoundException e) {
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            throw new ResponseStatusException(status, e.getMessage(), e);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Secured("ROLE_USER")
+    public void delete(@PathVariable  Long id) {
+        LOGGER.info("DELETE " + BASE_PATH);
+        LOGGER.debug("delete()");
+
+        try {
+            medicationService.delete(id);
         } catch (NotFoundException e) {
             HttpStatus status = HttpStatus.NOT_FOUND;
             throw new ResponseStatusException(status, e.getMessage(), e);
