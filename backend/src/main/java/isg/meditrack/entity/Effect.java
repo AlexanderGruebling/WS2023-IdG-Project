@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDateTime;
 
 @Entity
 public class Effect {
@@ -25,6 +26,8 @@ public class Effect {
 
     @Column(nullable = false)
     private Boolean desired;
+    @Column
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(
@@ -97,4 +100,14 @@ public class Effect {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+
 }

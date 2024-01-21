@@ -42,4 +42,11 @@ public interface EffectService {
      *
      */
     List<String> getAllEffectNames();
+
+    /**
+     * Get all effects for a specific name.
+     *
+     * @param name Name of the entry
+     */
+    List<Effect> getByName(String name);
 }

@@ -30,4 +30,9 @@ public interface MedicationService {
      *
      */
     List<Medication> getByUser();
+
+    /**
+     * Create default medications for a user after registering.
+     */
+    void createOnRegister(String email);
 }

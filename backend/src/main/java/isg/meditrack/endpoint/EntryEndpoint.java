@@ -71,4 +71,30 @@ public class EntryEndpoint {
             throw new ResponseStatusException(status, e.getMessage(), e);
         }
     }
+
+    @GetMapping("/last")
+    @Secured("ROLE_USER")
+    public EntryDto getLastForUser() {
+        LOGGER.info("GET " + BASE_PATH);
+
+        try {
+            return entryMapper.entryToEntryDto(entryService.getLastByUser());
+        } catch (NotFoundException e) {
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            throw new ResponseStatusException(status, e.getMessage(), e);
+        }
+    }
+
+    @GetMapping("/medId/{medId}")
+    @Secured("ROLE_USER")
+    public List<EntryDto> getEntriesByMedId(@PathVariable  Long medId) {
+        LOGGER.info("GET " + BASE_PATH + "/medId/{}", medId);
+
+        try {
+            return entryMapper.entryListToEntryDtoList(entryService.getByUser());
+        } catch (NotFoundException e) {
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            throw new ResponseStatusException(status, e.getMessage(), e);
+        }
+    }
 }

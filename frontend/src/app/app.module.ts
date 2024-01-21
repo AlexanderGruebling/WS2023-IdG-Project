@@ -26,7 +26,7 @@ import { MixedChartComponent } from './components/stats/mixed-chart/mixed-chart.
 import { BarChartComponent } from './components/stats/bar-chart/bar-chart.component';
 
 import {FullCalendarModule} from '@fullcalendar/angular';
-import { CalendarComponent } from './components/calendar/calendar.component';
+//import { CalendarComponent } from './components/calendar/calendar.component';
 
 
 @NgModule({
@@ -46,7 +46,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
     StatsComponent,
     MixedChartComponent,
     BarChartComponent,
-    CalendarComponent,
+    //CalendarComponent,
   ],
   imports: [
     BrowserModule,

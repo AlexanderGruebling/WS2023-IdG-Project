@@ -2,10 +2,12 @@ package isg.meditrack.service.impl;
 
 import isg.meditrack.endpoint.dto.UserLoginDto;
 import isg.meditrack.entity.ApplicationUser;
+import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
 import isg.meditrack.repository.UserRepository;
 import isg.meditrack.security.JwtTokenizer;
+import isg.meditrack.service.MedicationService;
 import isg.meditrack.service.UserService;
 import isg.meditrack.service.validation.CredentialValidator;
 import org.slf4j.Logger;
@@ -36,7 +38,10 @@ public class CustomUserDetailService implements UserService {
     private final CredentialValidator validator;
 
     @Autowired
-    public CustomUserDetailService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenizer jwtTokenizer, CredentialValidator validator) {
+    public CustomUserDetailService(UserRepository userRepository,
+                                   PasswordEncoder passwordEncoder,
+                                   JwtTokenizer jwtTokenizer,
+                                   CredentialValidator validator) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenizer = jwtTokenizer;
@@ -115,4 +120,6 @@ public class CustomUserDetailService implements UserService {
             return userRepository.getReferenceById(userId);
         }
     }
+
+
 }

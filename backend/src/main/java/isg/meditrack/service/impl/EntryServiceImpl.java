@@ -60,4 +60,18 @@ public class EntryServiceImpl implements EntryService {
         Long userId = userService.findApplicationUserByEmail(email).getId();
         return entryRepository.findAllByUserId(userId);
     }
+
+    @Override
+    public Entry getLastByUser() {
+        LOGGER.debug("Get all entries for user");
+
+        String email = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = userService.findApplicationUserByEmail(email).getId();
+        return entryRepository.findLastByUserId(userId).get(0);
+    }
+
+    @Override
+    public List<Entry> getByMedId(Long medId) {
+        return null;
+    }
 }

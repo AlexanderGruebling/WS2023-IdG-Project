@@ -2,15 +2,12 @@ package isg.meditrack.service.impl;
 
 import isg.meditrack.entity.Effect;
 import isg.meditrack.entity.Entry;
-import isg.meditrack.entity.Medication;
-import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.repository.EffectRepository;
 import isg.meditrack.service.EffectService;
 import isg.meditrack.service.EntryService;
 import isg.meditrack.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,6 +34,7 @@ public class EffectServiceImpl implements EffectService {
     public Effect create(Effect newEffect, Entry entry) {
         LOGGER.debug("Create new effect {}", newEffect);
         newEffect.setEntry(entry);
+        newEffect.setDate(entry.getDate());
         newEffect = effectRepository.save(newEffect);
         return newEffect;
     }
@@ -81,5 +79,13 @@ public class EffectServiceImpl implements EffectService {
         Collections.sort(distinctEffectNames);
 
         return distinctEffectNames;
+    }
+
+    @Override
+    public List<Effect> getByName(String name) {
+        LOGGER.debug("Get effects by Name");
+
+
+        return effectRepository.findAllByName(name);
     }
 }
