@@ -4,6 +4,7 @@ import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
 import isg.meditrack.repository.MedicationRepository;
+import isg.meditrack.service.EntryService;
 import isg.meditrack.service.MedicationService;
 import isg.meditrack.service.UserService;
 import isg.meditrack.service.validation.CredentialValidator;
@@ -13,7 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 
@@ -23,14 +24,16 @@ public class MedicationServiceImpl implements MedicationService {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final MedicationRepository medicationRepository;
     private final UserService userService;
+    private final EntryService entryService;
     private final CredentialValidator validator;
 
     public MedicationServiceImpl(MedicationRepository medicationRepository,
                                  CredentialValidator credentialValidator,
-                                 UserService userService) {
+                                 UserService userService, EntryService  entryService) {
         this.medicationRepository = medicationRepository;
         this.validator = credentialValidator;
         this.userService = userService;
+        this.entryService = entryService;
     }
 
 
@@ -103,4 +106,7 @@ public class MedicationServiceImpl implements MedicationService {
         med6.setUser(userService.findApplicationUserByEmail(email));
         medicationRepository.save(med6);
     }
+
+
+
 }

@@ -1,7 +1,9 @@
 package isg.meditrack.endpoint;
 
 
+import isg.meditrack.endpoint.dto.DosagePlotDataDto;
 import isg.meditrack.endpoint.dto.MedicationDto;
+import isg.meditrack.endpoint.dto.PlotDataDto;
 import isg.meditrack.endpoint.mapper.MedicationMapper;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
@@ -73,6 +75,19 @@ public class MedicationEndpoint {
 
         try {
             return medicationMapper.medicationListToMedicationDtoList(medicationService.getByUser());
+        } catch (NotFoundException e) {
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            throw new ResponseStatusException(status, e.getMessage(), e);
+        }
+    }
+
+    @GetMapping("/dosage/{name}")
+    @Secured("ROLE_USER")
+    public List<DosagePlotDataDto> getForName(@PathVariable String name) {
+        LOGGER.info("GET " + BASE_PATH + "/dosage/{}", name);
+
+        try {
+            return medicationService.getDosagePlotData(name);
         } catch (NotFoundException e) {
             HttpStatus status = HttpStatus.NOT_FOUND;
             throw new ResponseStatusException(status, e.getMessage(), e);
