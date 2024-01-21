@@ -74,4 +74,11 @@ public class Medication {
         return id;
     }
 
+    public Set<Entry> getUsedIn() {
+        return usedIn;
+    }
+
+    public void setUsedIn(Set<Entry> usedIn) {
+        this.usedIn = usedIn;
+    }
 }

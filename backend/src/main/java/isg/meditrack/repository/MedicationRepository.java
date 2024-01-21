@@ -13,4 +13,7 @@ import java.util.List;
 
     @Query("SELECT m FROM Medication m WHERE m.id = ?1")
    Medication findByMedId(Long userId);
+
+    @Query("SELECT m FROM Medication m WHERE m.name = ?1")
+    List<Medication> findAllByName(String name);
 }

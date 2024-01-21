@@ -1,6 +1,7 @@
 package isg.meditrack.service;
 
 
+import isg.meditrack.endpoint.dto.DosagePlotDataDto;
 import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
@@ -30,6 +31,14 @@ public interface MedicationService {
      *
      */
     List<Medication> getByUser();
+
+
+    /**
+     * Get all dosages for a medication with a name.
+     *
+     * @param name String of name of medication
+     * */
+    List<DosagePlotDataDto> getDosagePlotData(String name);
 
     /**
      * Create default medications for a user after registering.

@@ -1,5 +1,7 @@
 package isg.meditrack.service.impl;
 
+import isg.meditrack.endpoint.dto.DosagePlotDataDto;
+import isg.meditrack.entity.Entry;
 import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.exception.ValidationException;
@@ -16,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -66,6 +69,25 @@ public class MedicationServiceImpl implements MedicationService {
         Long userId = userService.findApplicationUserByEmail(email).getId();
 
         return medicationRepository.findAllByUserId(userId);
+    }
+
+    @Override
+    public List<DosagePlotDataDto> getDosagePlotData(String name) {
+        List<Medication> medications = medicationRepository.findAllByName(name);
+        List<DosagePlotDataDto> dosagePlotData = new ArrayList<>();
+
+        for (Medication medication: medications) {
+            List<Entry> entries = new ArrayList<>();
+            entries.addAll(medication.getUsedIn());
+            for (Entry entry : entries) {
+                DosagePlotDataDto dpd = new DosagePlotDataDto();
+                dpd.setDosage(medication.getDosage());
+                dpd.setDate(entry.getDate());
+                dosagePlotData.add(dpd);
+            }
+        }
+
+        return dosagePlotData;
     }
 
     @Override
