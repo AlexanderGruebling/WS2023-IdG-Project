@@ -58,10 +58,23 @@ public class EffectEndpoint {
         }
     }
 
+    @GetMapping()
+    @Secured("ROLE_USER")
+    public List<String> getAllEffectNames() {
+        LOGGER.info("GET " + BASE_PATH);
+
+        try {
+            return effectService.getAllEffectNames();
+        } catch (NotFoundException e) {
+            HttpStatus status = HttpStatus.NOT_FOUND;
+            throw new ResponseStatusException(status, e.getMessage(), e);
+        }
+    }
+
     @GetMapping("/entry/{entryId}")
     @Secured("ROLE_USER")
     public List<EffectDto> getForEntry(@PathVariable Long entryId) {
-        LOGGER.info("GET " + BASE_PATH + "/med/{}", entryId);
+        LOGGER.info("GET " + BASE_PATH + "/entry/{}", entryId);
 
         try {
             return effectMapper.effectListToEffectDtoList(effectService.getByEntry(entryId));
