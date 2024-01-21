@@ -1,5 +1,6 @@
 <div class="mt-2">
   <div class="d-flex flex-row justify-content-between">
+
     <h2 class="h5">What did you take today?</h2>
     <form class="row row-cols-sm-auto">
       <div class="col-12">
@@ -11,71 +12,22 @@
             [(ngModel)]="date"
             ngbDatepicker
             #d="ngbDatepicker"
-            (ngModelChange)="updateEntryModel()"
+            (ngModelChange)="updateDateEntryModel()"
           />
           <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
         </div>
       </div>
     </form>
   </div>
-
-  <div class="d-flex flex-row">
-    <div class="d-flex flex-column">
-      <div class="form-check form-switch" *ngFor="let medication of medicationsForUser">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          [value]="medication"
-          [id]="medication + '_id'"
-          (change)="updateCheckedMeds(medication)">
-        <label class="form-check-label" [for]="medication + '_id'">
-          {{medication.name}}
-        </label>
-      </div>
-    </div>
-  </div>
-  <h5>Did you observe any Side effects?</h5>
-  <button type="button" class="btn btn-outline-primary" (click)="addEffect('None')">None</button>
-  <button type="button" class="btn btn-outline-primary" (click)="addEffect('Migraine')">Migraine</button>
-  <button type="button" class="btn btn-outline-primary" (click)="addEffect('Drowsiness')">Drowsiness</button>
-  <button type="button" class="btn btn-outline-primary" (click)="addEffect('Tiredness')">Tiredness</button>
-  <button type="button" class="btn btn-outline-primary" (click)="toggleOtherSideEffect()" [class.active]="hideOtherSideEffect">Other</button>
-  <div class="form-group" *ngIf="hideOtherSideEffect">
-    <label for="otherSideEffect">Please tell us what you experienced:</label>
-    <input class="form-control" type="text" id="otherSideEffect" (keyup.enter)="addCustomEffect()" [(ngModel)]="customEffect">
-    <small class="form-text text-muted">Enter to submit.</small>
-  </div>
-  <div class="d-flex flex-row justify-content-between">
-    <div>
-      <div *ngFor="let effect of effectsForUser" class="mt-3">
-        <app-add-effect effectName="{{effect}}" [currentMed]="currentMed" (effectEvent)="addEffectToEntry($event)"></app-add-effect>
-      </div>
-    </div>
-    <button class="btn btn-primary" (click)="addEntry()">Add Entry</button>
+  <app-entry-for-med
+    *ngFor="let i of [].constructor(numberOfMeds)"
+    [medicationsForUser]="medicationsForUser"
+    (effectChanges)="updateEntryModel($event)">
+  </app-entry-for-med>
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-secondary me-1" (click)="addMed()">
+      <i class="bi bi-plus"></i> Add another</button>
+    <button class="btn btn-primary" (click)="addEntry()">
+      <i class="bi bi-floppy"></i> Save Entry</button>
   </div>
 </div>
-
-<ng-template #noMedicationsWindow let-modal>
-  <div class="modal-header">
-    <h4 class="modal-title">Are you new here?</h4>
-    <i class="bi bi-x-circle-fill modal-circle" (click)="modal.dismiss('Cross-click')"></i>
-  </div>
-  <div class="modal-body">
-    <div class="text-center confirm-delete">It looks like you haven't added any medications to your profile yet.</div>
-    <div class="text-center">
-      <button data-dismiss="modal"
-              class="btn btn-primary"
-              routerLink="/profile"
-      >
-        Yes, add medications!
-      </button>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type="button"
-            class="btn btn-outline-dark"
-            (click)="modal.close('Save click')">
-      Cancel
-    </button>
-  </div>
-</ng-template>

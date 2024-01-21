@@ -1,12 +1,14 @@
 <div class="input-group">
-  <label for="{{effectName}}" class="form-label">{{effectName}}:</label>
-  <input type="range"
-         id="{{effectName}}"
-         class="form-range"
-         min="0"
-         max="10"
-         step="0.5"
-         [(ngModel)]="effect.intensity"
-         (change)="addNewEffect()">
-  {{effect.intensity}}
+  <label for="{{effectName}}" class="form-label me-1">{{effectName}}:</label>
+  <div class="d-flex flex-row">
+    <input type="range"
+           id="{{effectName}}"
+           class="form-range"
+           min="0"
+           max="10"
+           step="0.5"
+           [(ngModel)]="effect.intensity"
+           (change)="addNewEffect()">
+      {{effect.intensity}}
+  </div>
 </div>

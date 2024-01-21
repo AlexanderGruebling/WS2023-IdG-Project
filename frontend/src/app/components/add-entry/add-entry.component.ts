@@ -1,12 +1,13 @@
-import {Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import {Medication} from '../../dtos/Medication';
+import {Component, OnInit} from '@angular/core';
+import {Medication, MedicationWithEffects} from '../../dtos/Medication';
 import {MedicationService} from '../../services/medication.service';
 import {Effect} from '../../dtos/effect';
 import {EntryService} from '../../services/entry.service';
 import {EffectService} from '../../services/effect.service';
 import {Entry} from '../../dtos/entry';
-import {NgbCalendar, NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-entry',
@@ -14,19 +15,12 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./add-entry.component.scss']
 })
 export class AddEntryComponent implements OnInit {
-  @ViewChild('noMedicationsWindow')
-  noMedicationsWindow: TemplateRef<any>;
   medicationsForUser: Medication[] = [];
-  selectedMedications: Medication[] = [];
   selectedMedIds: number[] = [];
   effects: Effect[] = [];
-  text = 'today';
   date: NgbDateStruct;
-  hideOtherSideEffect = false;
-  effectsForUser: string[] = [];
-  customEffect: string = null;
-  currentMed: Medication;
   entry: Entry;
+  numberOfMeds = 1;
 
   constructor(
     private medicationService: MedicationService,
@@ -34,27 +28,18 @@ export class AddEntryComponent implements OnInit {
     private effectService: EffectService,
     private calendar: NgbCalendar,
     private toastr: ToastrService,
-    private modalService: NgbModal) { }
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getForUser();
-    console.log(this.currentMed);
     this.getEffectsForMeds();
-    console.log(this.date);
   }
   getForUser(): void {
-    console.log('called');
     this.medicationService.getForUser().subscribe({
       next: data => {
         this.medicationsForUser = data;
         this.date = this.calendar.getToday();
         this.entry = new Entry(null, new Date(this.date.year, this.date.month - 1, this.date.day), [], this.selectedMedIds);
-        this.currentMed = this.medicationsForUser[0];
-        if (this.medicationsForUser.length <= 0) {
-          // TODO: fix modal
-          this.modalService.open(this.noMedicationsWindow, {backdrop: 'static', size: 'lg'});
-        }
-        console.log(this.medicationsForUser);
     },
     error: err => {
         this.toastr.error('Error!', 'Please contact our administrator: ' + err.errors.toString());
@@ -65,33 +50,11 @@ export class AddEntryComponent implements OnInit {
     this.medicationsForUser.forEach(x => this.effectService.getByMedId(x.medId).subscribe({
       next: data => {
         this.effects = data;
-        console.log(this.effects);
       },
       error: err => {
-        console.log(err);
+        this.toastr.error('Error!', 'Could not fetch effects for medications! Please contact our administrator.');
       }
     }));
-  }
-  toggleOtherSideEffect(): void {
-    this.hideOtherSideEffect = !this.hideOtherSideEffect;
-  }
-  addEffect(effect: string): void {
-    if (effect === 'None') {
-      this.effectsForUser = [];
-      return;
-    }
-    if (this.effectsForUser.indexOf(effect) > -1) {
-      this.effectsForUser.splice(this.effectsForUser.indexOf(effect), 1);
-      return;
-    }
-    this.effectsForUser.push(effect);
-  }
-  addCustomEffect(): void {
-    this.effectsForUser.push(this.customEffect);
-    this.customEffect = null;
-  }
-  addEffectToEntry(newEffect: Effect) {
-    this.entry.effects.push(newEffect);
   }
   addEntry(){
     console.log(this.entry);
@@ -104,18 +67,21 @@ export class AddEntryComponent implements OnInit {
         }
       }
     );
+    this.router.navigate(['']);
   }
-  updateCheckedMeds(medication: Medication) {
-    console.log(medication.medId);
-    const index = this.selectedMedications.indexOf(medication);
-    if (index > -1) {
-      this.selectedMedications.splice(index, 1);
-    } else {
-      this.selectedMedications.push(medication);
-    }
-    this.entry.medIds = this.selectedMedications.map(x => x.medId);
+  addMed() {
+    this.numberOfMeds += 1;
   }
-  updateEntryModel(): void {
+  updateDateEntryModel(): void {
     this.entry.date = new Date(this.date.year, this.date.month - 1, this.date.day);
+  }
+  updateEntryModel(medicationWithEffects: MedicationWithEffects) {
+    this.entry.medIds.push(medicationWithEffects.selectedMed.medId);
+    this.entry.effects = this.entry.effects.concat(medicationWithEffects.observedEffects);
+    this.entry.medIds = this.getDistinct(this.entry.medIds);
+    this.entry.effects =this.getDistinct(this.entry.effects);
+  }
+  getDistinct(array: any[]): any[] {
+    return [...new Set(array)];
   }
 }
