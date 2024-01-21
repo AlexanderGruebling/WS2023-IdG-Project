@@ -6,6 +6,7 @@ import isg.meditrack.entity.Medication;
 import isg.meditrack.exception.NotFoundException;
 import isg.meditrack.repository.EffectRepository;
 import isg.meditrack.service.EffectService;
+import isg.meditrack.service.EntryService;
 import isg.meditrack.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,16 +15,22 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EffectServiceImpl implements EffectService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final EffectRepository effectRepository;
+    private final EntryService entryService;
 
-    public EffectServiceImpl(EffectRepository effectRepository) {
+    public EffectServiceImpl(EffectRepository effectRepository,
+                             EntryService entryService) {
         this.effectRepository = effectRepository;
+        this.entryService = entryService;
     }
 
     @Override
@@ -55,5 +62,24 @@ public class EffectServiceImpl implements EffectService {
 
 
         return effectRepository.findAllByEntryId(entryId);
+    }
+
+    @Override
+    public List<String> getAllEffectNames() {
+        List<Entry> entries = entryService.getByUser();
+        List<String> effectNames = new ArrayList<>();
+
+        for (Entry entry : entries) {
+            List<Effect> effects = this.getByEntry(entry.getId());
+            for (Effect effect: effects) {
+                effectNames.add(effect.getName());
+            }
+        }
+
+        List<String> distinctEffectNames = effectNames.stream().distinct().collect(Collectors.toList());
+
+        Collections.sort(distinctEffectNames);
+
+        return distinctEffectNames;
     }
 }
