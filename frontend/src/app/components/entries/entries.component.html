@@ -1,0 +1,47 @@
+<h1  class="display-4">Your entries so far</h1>
+<div class="accordion mt-1" id="medications">
+  <div class="accordion-item" *ngFor="let entry of entries; let i = index">
+    <div class="accordion-header">
+      <button class="accordion-button"
+              type="button" data-bs-toggle="collapse"
+              [attr.data-bs-target]="'#collapse' + i"
+              aria-expanded="true"
+              [attr.aria-controls]="'collapse' + i">
+        <div class="flex-container">
+          <div class="right-edge">{{ this.formatDate(entry.date) }}</div>
+          <div class="left-edge">{{ this.medsToString(entry.medIds) }}</div>
+        </div>
+
+      </button>
+    </div>
+    <div id="collapse{{i}}" class="accordion-collapse collapse" data-bs-parent="#medications">
+      <div class="accordion-body">
+        <div>
+          <ul>
+            <li><strong>Meds:</strong> {{ this.medsToString(entry.medIds) }}</li>
+            <li><strong>Symptoms:</strong> {{ this.effectsToString(entry.effects)}} </li>
+          </ul>
+
+        </div>
+        <div class="flex space-between">
+          <button type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  (click)="this.deleteEntry(entry.entryId);"
+          >
+            <i class="bi-pencil"></i>
+            Edit
+          </button>
+          <button type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="this.deleteEntry(entry.entryId);"
+          >
+            <i class="bi-trash"></i>
+            Delete
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

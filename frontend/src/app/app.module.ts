@@ -28,6 +28,7 @@ import { BarChartComponent } from './components/stats/bar-chart/bar-chart.compon
 import {FullCalendarModule} from '@fullcalendar/angular';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { EntryForMedComponent } from './components/add-entry/entry-for-med/entry-for-med.component';
+import { EntriesComponent } from './components/entries/entries.component';
 
 
 @NgModule({
@@ -49,6 +50,7 @@ import { EntryForMedComponent } from './components/add-entry/entry-for-med/entry
     BarChartComponent,
     CalendarComponent,
     EntryForMedComponent,
+    EntriesComponent,
   ],
   imports: [
     BrowserModule,

@@ -19,4 +19,8 @@ export class EntryService {
   getForUser(): Observable<Entry[]> {
     return this.http.get<Entry[]>(baseUri);
   }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(baseUri + '/' + id);
+  }
 }

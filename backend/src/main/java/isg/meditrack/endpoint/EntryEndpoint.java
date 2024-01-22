@@ -106,7 +106,11 @@ public class EntryEndpoint {
         LOGGER.info("GET " + BASE_PATH);
 
         try {
-            return entryMapper.entryListToEntryDtoList(entryService.getByUser());
+            List<EntryDto> entries = entryMapper.entryListToEntryDtoList(entryService.getByUser());
+            for (EntryDto i : entries){
+                i.setEffects(effectMapper.effectListToEffectDtoList(effectService.getByEntry(i.getEntryId())));
+            }
+            return entries;
         } catch (NotFoundException e) {
             HttpStatus status = HttpStatus.NOT_FOUND;
             throw new ResponseStatusException(status, e.getMessage(), e);
@@ -119,7 +123,9 @@ public class EntryEndpoint {
         LOGGER.info("GET " + BASE_PATH);
 
         try {
-            return entryMapper.entryToEntryDto(entryService.getLastByUser());
+            EntryDto entry = entryMapper.entryToEntryDto(entryService.getLastByUser());
+            entry.setEffects(effectMapper.effectListToEffectDtoList(effectService.getByEntry(entry.getEntryId())));
+            return entry;
         } catch (NotFoundException e) {
             HttpStatus status = HttpStatus.NOT_FOUND;
             throw new ResponseStatusException(status, e.getMessage(), e);

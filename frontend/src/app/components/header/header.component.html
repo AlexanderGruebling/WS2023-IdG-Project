@@ -7,7 +7,28 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav">
       <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
-
+      <!-- Calender Page -->
+      <button class="btn bg-white rounded-circle me-3"
+              *ngIf="authService.isLoggedIn()"
+              role="button"
+              routerLink="/calendar">
+        <i class="bi bi-calendar-date"></i>
+      </button>
+      <!-- Add Entry Page -->
+      <button class="btn bg-white rounded-circle me-3"
+              *ngIf="authService.isLoggedIn()"
+              role="button"
+              routerLink="/add-entry">
+        <i class="bi bi-pencil"></i>
+      </button>
+      <!-- Entries Page -->
+      <button class="btn bg-white rounded-circle me-3"
+              *ngIf="authService.isLoggedIn()"
+              role="button"
+              routerLink="/entries"
+              aria-label="View all Entries">
+        <i class="bi bi-journal-medical" aria-label="View Entries"></i>
+      </button>
       <!-- Stats Page -->
       <button class="btn bg-white rounded-circle me-3"
               *ngIf="authService.isLoggedIn()"
