@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
+import {Registration} from "../../dtos/registration";
+import {ProfileService} from "../../services/profile.service";
+import {el} from "@fullcalendar/core/internal-common";
 
 @Component({
   selector: 'app-home',
@@ -8,9 +11,21 @@ import {AuthService} from '../../services/auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public authService: AuthService) { }
+  profile: Registration = {
+    username: '',
+    email: '',
+    password: ''
+  };
+
+  constructor(public authService: AuthService,
+              public profileService: ProfileService) { }
 
   ngOnInit() {
+    if (this.authService.isLoggedIn()){
+      this.profileService.getUser().subscribe(data => {
+        this.profile.username = data.username;
+      },);
+    }
   }
 
 }
