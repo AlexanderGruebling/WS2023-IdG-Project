@@ -41,7 +41,7 @@
           </div>
           <div class="flex space-between">
             <div>
-              <a class="btn btn-sm btn-outline-primary" routerLink="/edit" routerLinkActive="active">
+              <a class="btn btn-sm btn-outline-secondary" routerLink="/edit" routerLinkActive="active">
                 <i class="bi bi-pencil"></i>
                 Edit Profile
               </a>
@@ -58,7 +58,7 @@
           <div class="mt-3">
             <div class="d-flex justify-content-between">
               <strong>My medications:</strong>
-              <a class="btn btn-sm btn-outline-secondary" routerLink="/add-meds">
+              <a class="btn btn-sm btn-outline-primary" routerLink="/add-meds">
                 <i class="bi bi-plus"></i>
                 Add Medications
               </a>
@@ -81,13 +81,21 @@
                         <li><strong>Dosage:</strong> {{ med.dosage }} mg</li>
                         <li><strong>Frequency:</strong> {{ med.frequency }} per day</li>
                       </ul>
-                      <button type="button"
-                              class="btn btn-sm btn-outline-danger"
-                              (click)="this.deleteMedication(med.medId);"
-                      >
-                        <i class="bi-trash"></i>
-                        Delete
-                      </button>
+                      <div>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-secondary"
+                        >
+                          <i class="bi-pencil"></i>
+                          Edit
+                        </button>
+                        <button type="button"
+                                class="btn btn-sm btn-outline-danger"
+                                (click)="this.deleteMedication(med.medId);"
+                        >
+                          <i class="bi-trash"></i>
+                          Delete
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
