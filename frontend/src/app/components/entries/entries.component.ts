@@ -40,11 +40,11 @@ export class EntriesComponent implements OnInit {
   deleteEntry(id): void {
     this.entryService.delete(id).subscribe({
       next: () => {
-        this.notification.success(`Medication successfully deleted`);
+        this.notification.success(`Entry successfully deleted`);
         this.fetchEntries();
       },
       error: error => {
-        console.error('Error deleting Med: ', error);
+        console.error('Error deleting Entry: ', error);
         this.notification.error(error.error.error, error.error.message);
       },
     });
