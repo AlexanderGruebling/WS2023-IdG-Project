@@ -22,7 +22,8 @@
   <app-entry-for-med
     *ngFor="let i of [].constructor(numberOfMeds)"
     [medicationsForUser]="medicationsForUser"
-    (effectChanges)="updateEntryModel($event)">
+    (effectChanges)="updateEntryModel($event)"
+    (clearAll)="clearAll()">
   </app-entry-for-med>
   <div class="d-flex justify-content-end">
     <button class="btn btn-secondary me-1" (click)="addMed()">

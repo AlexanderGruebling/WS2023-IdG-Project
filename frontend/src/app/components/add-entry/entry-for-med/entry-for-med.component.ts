@@ -14,11 +14,13 @@ export class EntryForMedComponent implements OnInit, OnChanges {
   @Input() entry: Entry;
   @Input() medicationsForUser: Medication[];
   @Output() effectChanges = new EventEmitter<MedicationWithEffects>();
+  @Output() clearAll = new EventEmitter();
   selectedMed: Medication;
   effects: Effect[] = [];
   effectsForUser: string[] = [];
   numberOfEffects = 1;
   medSelected = false;
+  resetEffects = false;
 
   constructor(
     private effectService: EffectService,
@@ -52,5 +54,10 @@ export class EntryForMedComponent implements OnInit, OnChanges {
   }
   updateParent() {
     this.effectChanges.emit(new MedicationWithEffects(this.selectedMed, this.effects));
+  }
+  emitClearAllEvent() {
+    this.clearAll.emit();
+    this.numberOfEffects = 1;
+    this.resetEffects = true;
   }
 }

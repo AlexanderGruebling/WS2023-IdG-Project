@@ -85,4 +85,10 @@ export class AddEntryComponent implements OnInit {
   getDistinct(array: any[]): any[] {
     return [...new Set(array)];
   }
+  clearAll() {
+    this.numberOfMeds = 1;
+    this.selectedMedIds = this.entry.medIds;
+    this.entry = new Entry(null, new Date(this.date.year, this.date.month - 1, this.date.day + 1), [], this.selectedMedIds);
+    console.log(this.entry);
+  }
 }

@@ -10,6 +10,7 @@ import {Medication} from '../../../dtos/Medication';
 export class AddEffectComponent implements OnInit, OnChanges {
   @Input() currentMed: Medication;
   @Input() effectsForUser: string[] = [];
+  @Input() resetEffect = false;
   @Output() effectEvent = new EventEmitter<Effect>();
   effect: Effect;
   effectName = '';
@@ -23,6 +24,9 @@ export class AddEffectComponent implements OnInit, OnChanges {
     this.effect = new Effect(this.effectName, '', 0,false, this.currentMed !== undefined ? this.currentMed.medId : null);
   }
   ngOnChanges(changes: SimpleChanges) {
+    if (this.resetEffect) {
+      this.effectName = 'None';
+    }
     if (this.effectsForUser.length <= 0) {
       this.effectName = 'None';
     } else {
