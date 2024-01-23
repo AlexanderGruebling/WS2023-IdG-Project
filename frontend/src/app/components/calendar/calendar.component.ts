@@ -21,6 +21,8 @@ export class CalendarComponent implements OnInit {
     plugins: [dayGridPlugin, bootstrap5Plugin],
     themeSystem: 'bootstrap5',
     contentHeight: 600,
+    displayEventTime: false,
+    eventColor: '#086111',
     events: []
   };
 

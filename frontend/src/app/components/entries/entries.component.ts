@@ -96,7 +96,7 @@ export class EntriesComponent implements OnInit {
     for (const id of medIds) {
       for (const med of this.medications){
         if (id === med.medId) {
-          resultString += med.name + ' (' + med.dosage + ') ';
+          resultString += med.name + ' ';
         }
       }
     }

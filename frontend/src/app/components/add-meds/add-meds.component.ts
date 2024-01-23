@@ -24,6 +24,7 @@ export class AddMedsComponent implements OnInit {
   }
 
   updateMeds(med: Medication): void {
+    med.name = med.name + '[' + med.dosage + ']';
     this.meds.add(med);
     console.log(this.meds);
   }
