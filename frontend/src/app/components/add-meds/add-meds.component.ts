@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Medication} from '../../dtos/Medication';
 import {MedicationService} from '../../services/medication.service';
 import {ToastrService} from 'ngx-toastr';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-meds',
@@ -16,6 +17,7 @@ export class AddMedsComponent implements OnInit {
   constructor(
     private service: MedicationService,
     private notification: ToastrService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -32,7 +34,8 @@ export class AddMedsComponent implements OnInit {
   addMeds(): void {
     this.meds.forEach(med => this.service.create(med).subscribe({
       next: data => {
-        console.log(`${med.name} successfully created`);
+        this.notification.success(`${med.name} successfully created`);
+        this.router.navigate(['/profile']);
       },
       error: err => {
         console.error('Error creating med', err);
