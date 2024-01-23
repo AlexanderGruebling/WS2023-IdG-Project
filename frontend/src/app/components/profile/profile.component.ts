@@ -90,6 +90,8 @@ export class ProfileComponent implements OnInit {
   fetchMeds(): void {
     this.medicationService.getForUser().subscribe({
       next: data => {
+        const indexOfNone = data.findIndex(medication => medication.name === 'None');
+        data.splice(indexOfNone, 1);
         this.medications = data;
       }, error: err => {
         console.log(err);
