@@ -1,7 +1,7 @@
 <select class="form-select mb-1" [(ngModel)]="effectName" (change)="addNewEffect()">
   <option
     *ngFor="let effect of effectsForUser"
-    [ngValue]="effect" [disabled]="effect === 'None'">
+    [ngValue]="effect">
     {{effect}}
   </option>
 </select>
