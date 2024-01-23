@@ -40,7 +40,7 @@ export class AddEntryComponent implements OnInit {
       next: data => {
         this.medicationsForUser = data;
         this.date = this.calendar.getToday();
-        this.entry = new Entry(null, new Date(this.date.year, this.date.month - 1, this.date.day), [], this.selectedMedIds);
+        this.entry = new Entry(null, new Date(this.date.year, this.date.month - 1, this.date.day + 1), [], this.selectedMedIds);
     },
     error: err => {
         this.toastr.error('Error!', 'Please contact our administrator: ' + err.errors.toString());
@@ -74,7 +74,7 @@ export class AddEntryComponent implements OnInit {
     this.numberOfMeds += 1;
   }
   updateDateEntryModel(): void {
-    this.entry.date = new Date(this.date.year, this.date.month - 1, this.date.day);
+    this.entry.date = new Date(this.date.year, this.date.month - 1, this.date.day + 1);
   }
   updateEntryModel(medicationWithEffects: MedicationWithEffects) {
     this.entry.medIds.push(medicationWithEffects.selectedMed.medId);

@@ -45,6 +45,7 @@ export class CalendarComponent implements OnInit {
   }
   createEvents() {
     for (const [entry, medications] of this.entriesWithMeds) {
+      console.log(entry.date);
       for (const medication of medications) {
         this.events.push({title: medication.name, date: entry.date});
       }
