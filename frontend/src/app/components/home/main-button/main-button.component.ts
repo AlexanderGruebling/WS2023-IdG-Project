@@ -16,7 +16,7 @@ export class MainButtonComponent implements OnInit {
 
   ngOnInit(): void {
     switch (this.buttonIcon) {
-      case 'calendar-plus':
+      case 'pencil':
         this.text = 'Track your prescription intake';
         this.asset = 'pills.jpg';
         break;

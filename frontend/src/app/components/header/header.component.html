@@ -1,24 +1,28 @@
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark nav-grid">
   <img src="../../../assets/mediTrack-logo_white.png" id="logo" routerLink="/" alt="MediTrack Logo">
   <button class="navbar-toggler ml-5" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse nav-routes nav-personal">
+  </div>
+  <div class="collapse navbar-collapse nav-routes nav-personal">
     <ul class="navbar-nav">
       <a class="nav-link" *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active">Login</a>
       <!-- Calender Page -->
       <button class="btn bg-white rounded-circle me-3"
               *ngIf="authService.isLoggedIn()"
               role="button"
-              routerLink="/calendar">
+              routerLink="/calendar"
+              title="View Calendar">
         <i class="bi bi-calendar-date"></i>
       </button>
       <!-- Add Entry Page -->
       <button class="btn bg-white rounded-circle me-3"
               *ngIf="authService.isLoggedIn()"
               role="button"
-              routerLink="/add-entry">
+              routerLink="/add-entry"
+              title="Add new Entry">
         <i class="bi bi-pencil"></i>
       </button>
       <!-- Entries Page -->
@@ -26,20 +30,21 @@
               *ngIf="authService.isLoggedIn()"
               role="button"
               routerLink="/entries"
-              aria-label="View all Entries">
-        <i class="bi bi-journal-medical" aria-label="View Entries"></i>
+              title="View all Entries">
+        <i class="bi bi-journal-medical"></i>
       </button>
       <!-- Stats Page -->
       <button class="btn bg-white rounded-circle me-3"
               *ngIf="authService.isLoggedIn()"
               role="button"
-              routerLink="/stats">
+              routerLink="/stats"
+              title="View Stats">
         <i class="bi bi-bar-chart"></i>
       </button>
 
       <!-- Profile Dropdown-->
       <div class="dropdown" *ngIf="authService.isLoggedIn()" ngbDropdown>
-        <button class="btn bg-white rounded-circle dropdown-toggle"
+        <button class="btn bg-white square dropdown-toggle"
                 role="button"
                 type="button"
                 id="dropdownMenuButton"

@@ -18,3 +18,13 @@
 svg {
   color: #086111;
 }
+
+.nav-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.nav-personal {
+  justify-content: end;
+  margin-right: 2rem;
+}

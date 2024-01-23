@@ -8,6 +8,7 @@ import isg.meditrack.service.EntryService;
 import isg.meditrack.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,7 +26,7 @@ public class EffectServiceImpl implements EffectService {
     private final EntryService entryService;
 
     public EffectServiceImpl(EffectRepository effectRepository,
-                             EntryService entryService) {
+                             EntryService entryService, UserService userService) {
         this.effectRepository = effectRepository;
         this.entryService = entryService;
     }
@@ -100,10 +101,19 @@ public class EffectServiceImpl implements EffectService {
 
     @Override
     public List<Effect> getByName(String name) {
-        LOGGER.debug("Get effects by Name");
+        LOGGER.debug("Get effects by Name for the current user");
+        List<Entry> entries = entryService.getByUser();
+        List<Effect> effectsByName = new ArrayList<>();
 
-
-        return effectRepository.findAllByName(name);
+        for (Entry entry : entries) {
+            List<Effect> effects = this.getByEntry(entry.getId());
+            for (Effect effect: effects) {
+                if (effect.getName().equals(name)){
+                    effectsByName.add(effect);
+                }
+            }
+        }
+        return effectsByName;
     }
 
     @Override
