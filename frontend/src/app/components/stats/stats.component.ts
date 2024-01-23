@@ -44,7 +44,13 @@ export class StatsComponent implements OnInit {
 
   getMedicationsForUser() {
     this.medicationService.getForUser().subscribe({
-      next: response => this.meds = response,
+      next: response => {
+        const noneMed = response.findIndex(medication => medication.name === 'None');
+        if (noneMed > 0) {
+          response.splice(noneMed, 1);
+        }
+        this.meds = response;
+      },
       error: err => this.toastrService.error('Error!', 'Please contact our administrator.')
     });
   }
