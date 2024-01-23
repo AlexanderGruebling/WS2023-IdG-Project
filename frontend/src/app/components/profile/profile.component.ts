@@ -33,7 +33,6 @@ export class ProfileComponent implements OnInit {
     private notification: ToastrService,
     private medicationService: MedicationService,
   ) {
-    titleService.setTitle('Profile');
   }
 
   ngOnInit(): void {
@@ -97,5 +96,6 @@ export class ProfileComponent implements OnInit {
       }
     });
   }
+
 
 }
