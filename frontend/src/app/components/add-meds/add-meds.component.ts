@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Medication} from '../../dtos/Medication';
 import {MedicationService} from '../../services/medication.service';
 import {ToastrService} from 'ngx-toastr';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-meds',

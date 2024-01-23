@@ -56,7 +56,7 @@ export class RegistrationComponent implements OnInit {
     this.registrationService.createUser(registration).subscribe({
       next: () => {
         this.notification.success('Successfully registered!');
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/']);
       },
       error: error => {
         console.error('Could not register due to: ', error);
