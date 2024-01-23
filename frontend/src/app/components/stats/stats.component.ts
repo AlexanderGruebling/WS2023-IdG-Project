@@ -113,6 +113,9 @@ export class StatsComponent implements OnInit {
           dateStringsMap.set(x, date.toDateString());
           newLabels.push(date);
         }
+        if (entry.selectedMed.dosage <= 1) {
+          entry.entriesForPlot.map(plotEntry => plotEntry.dosage = 500);
+        }
         newDatasets.push({
           type: 'bar',
           label: entry.selectedMed.name,
