@@ -21,8 +21,8 @@
                        class="col-lg-3 m-2">
       </app-main-button>
     </div>
-    <h2 class="h4 mt-2">Your recent entries:</h2>
-    <div class="accordion mt-1" id="medications">
+    <h2 *ngIf="entries.length > 0" class="h4 mt-2">Your recent entries:</h2>
+    <div *ngIf="entries.length > 0" class="accordion mt-1" id="medications">
       <div class="accordion-item" *ngFor="let entry of entries; let i = index">
         <div class="accordion-header">
           <button class="accordion-button"
