@@ -3,3 +3,13 @@ h1 {
   margin-bottom: 1%;
   margin-top: 1%;
 }
+
+.form-check-input:checked {
+  background-color: #086111;
+  border-color: white;
+  box-shadow: none;
+}
+
+.form-check-input {
+  box-shadow: none;
+}
