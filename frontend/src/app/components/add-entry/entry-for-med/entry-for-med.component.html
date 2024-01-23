@@ -1,7 +1,7 @@
 <hr>
 <div class="d-flex flex-row">
   <div class="d-flex flex-column">
-    <select class="form-select" [(ngModel)]="selectedMed" (change)="updateParent()">
+    <select class="form-select" [(ngModel)]="selectedMed">
       <option
         *ngFor="let medication of medicationsForUser"
         [ngValue]="medication"
@@ -10,22 +10,19 @@
       </option>
     </select>
   </div>
+  <button routerLink="/profile" class="btn btn-outline-secondary ms-1">Add Medication
+    <i class="bi bi-box-arrow-up-right"></i>
+  </button>
 </div>
 <h5>Did you observe any Side effects?</h5>
-<button type="button" class="btn btn-outline-primary" (click)="addEffect('None')">None</button>
-<button type="button" class="btn btn-outline-primary" (click)="addEffect('Migraine')">Migraine</button>
-<button type="button" class="btn btn-outline-primary" (click)="addEffect('Drowsiness')">Drowsiness</button>
-<button type="button" class="btn btn-outline-primary" (click)="addEffect('Tiredness')">Tiredness</button>
-<button type="button" class="btn btn-outline-primary" (click)="toggleOtherSideEffect()" [class.active]="hideOtherSideEffect">Other</button>
-<div class="form-group" *ngIf="hideOtherSideEffect">
-  <label for="otherSideEffect">Please tell us what you experienced:</label>
-  <input class="form-control" type="text" id="otherSideEffect" (keyup.enter)="addCustomEffect()" [(ngModel)]="customEffect">
-  <small class="form-text text-muted">Enter to submit.</small>
-</div>
-<div class="d-flex flex-row justify-content-between">
-  <div>
-    <div *ngFor="let effect of effectNames" class="mt-3">
-      <app-add-effect effectName="{{effect}}" [currentMed]="selectedMed" (effectEvent)="addEffectToEntry($event)"></app-add-effect>
+<div class="d-flex flex-column" *ngFor="let i of [].constructor(numberOfEffects)">
+  <div class="d-flex flex-row justify-content-between">
+    <div>
+      <div class="mt-3">
+        <app-add-effect [effectsForUser]="effectsForUser" [currentMed]="selectedMed" (effectEvent)="addEffectToEntry($event)"></app-add-effect>
+      </div>
     </div>
   </div>
 </div>
+<button type="button" class="btn btn-outline-primary" (click)="addEffect()">Add another Effect</button>
+

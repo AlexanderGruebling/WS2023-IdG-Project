@@ -80,7 +80,7 @@ export class AddEntryComponent implements OnInit {
     this.entry.medIds.push(medicationWithEffects.selectedMed.medId);
     this.entry.effects = this.entry.effects.concat(medicationWithEffects.observedEffects);
     this.entry.medIds = this.getDistinct(this.entry.medIds);
-    this.entry.effects =this.getDistinct(this.entry.effects);
+    this.entry.effects = this.getDistinct(this.entry.effects);
   }
   getDistinct(array: any[]): any[] {
     return [...new Set(array)];

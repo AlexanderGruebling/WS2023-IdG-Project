@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {Medication, MedicationWithEffects} from '../../../dtos/Medication';
 import {Effect} from '../../../dtos/effect';
 import {Entry} from '../../../dtos/entry';
+import {EffectService} from '../../../services/effect.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-entry-for-med',
@@ -13,15 +15,19 @@ export class EntryForMedComponent implements OnInit, OnChanges {
   @Input() medicationsForUser: Medication[];
   @Output() effectChanges = new EventEmitter<MedicationWithEffects>();
   selectedMed: Medication;
-  effectNames: string[] = [];
   effects: Effect[] = [];
-  hideOtherSideEffect = false;
-  customEffect: string;
+  effectsForUser: string[] = [];
+  numberOfEffects = 1;
+  medSelected = false;
 
-  constructor() { }
+  constructor(
+    private effectService: EffectService,
+    private toastrService: ToastrService,
+  ) { }
 
   ngOnInit(): void {
     this.selectedMed = this.medicationsForUser[5];
+    this.getEffectsForUser();
   }
   ngOnChanges(changes: SimpleChanges) {
     if (this.medicationsForUser.length <= 0) {
@@ -30,25 +36,15 @@ export class EntryForMedComponent implements OnInit, OnChanges {
       this.selectedMed = this.medicationsForUser[5];
     }
   }
-
-  addEffect(effect: string): void {
-    if (effect === 'None') {
-      this.effectNames = [];
-      return;
-    }
-    if (this.effectNames.indexOf(effect) > -1) {
-      this.effectNames.splice(this.effectNames.indexOf(effect), 1);
-      return;
-    }
-    this.effectNames.push(effect);
-    this.updateParent();
+  getEffectsForUser(): void {
+    this.effectService.getAllEffectNames().subscribe({
+      next: value => this.effectsForUser = value,
+      error: err => this.toastrService.error('Error!', 'Could not fetch your effects.')
+    });
   }
-  toggleOtherSideEffect(): void {
-    this.hideOtherSideEffect = !this.hideOtherSideEffect;
-  }
-  addCustomEffect(): void {
-    this.effectNames.push(this.customEffect);
-    this.customEffect = null;
+  addEffect(): void {
+    this.numberOfEffects++;
+    this.medSelected = true;
   }
   addEffectToEntry(newEffect: Effect) {
     this.effects.push(newEffect);
