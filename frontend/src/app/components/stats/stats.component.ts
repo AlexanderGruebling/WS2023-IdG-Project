@@ -50,6 +50,8 @@ export class StatsComponent implements OnInit {
           response.splice(noneMed, 1);
         }
         this.meds = response;
+        this.selectedMeds = new Set(this.meds);
+        this.updatePlot();
       },
       error: err => this.toastrService.error('Error!', 'Please contact our administrator.')
     });
@@ -57,7 +59,11 @@ export class StatsComponent implements OnInit {
 
   getAllEffectNames() {
     this.effectService.getAllEffectNames().subscribe({
-      next: response => this.effectNames = response,
+      next: response => {
+        this.effectNames = response;
+        this.selectedEffects = new Set(response);
+        this.updatePlot();
+      },
       error: err => this.toastrService.error('Error!', 'Please contact our administrator.')
     });
   }
