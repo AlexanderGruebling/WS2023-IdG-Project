@@ -76,18 +76,18 @@
                 </div>
                 <div id="collapse{{i}}" class="accordion-collapse collapse" data-bs-parent="#medications">
                   <div class="accordion-body">
-                    <div>
+                    <div class="flex space-between">
                       <ul>
                         <li><strong>Dosage:</strong> {{ med.dosage }} mg</li>
                         <li><strong>Frequency:</strong> {{ med.frequency }} per day</li>
-                        <button type="button"
-                                class="btn btn-sm btn-outline-danger"
-                                (click)="this.deleteMedication(med.medId);"
-                        >
-                          <i class="bi-trash"></i>
-                          Delete
-                        </button>
                       </ul>
+                      <button type="button"
+                              class="btn btn-sm btn-outline-danger"
+                              (click)="this.deleteMedication(med.medId);"
+                      >
+                        <i class="bi-trash"></i>
+                        Delete
+                      </button>
                     </div>
                   </div>
                 </div>
