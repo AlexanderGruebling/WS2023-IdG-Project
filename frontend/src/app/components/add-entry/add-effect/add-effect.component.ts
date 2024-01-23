@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Effect} from '../../../dtos/effect';
 import {Medication} from '../../../dtos/Medication';
+import {EffectService} from "../../../services/effect.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-add-effect',
@@ -9,36 +11,32 @@ import {Medication} from '../../../dtos/Medication';
 })
 export class AddEffectComponent implements OnInit, OnChanges {
   @Input() currentMed: Medication;
-  @Input() effectsForUser: string[] = [];
   @Input() resetEffect = false;
   @Output() effectEvent = new EventEmitter<Effect>();
   effect: Effect;
   effectName = '';
   customEffect = '';
   customEffectTriggered = false;
+  effectsForUser: string[] = [];
 
-  constructor() {
+  constructor(
+    private effectService: EffectService,
+    private toastrService: ToastrService,
+  ) {
   }
   ngOnInit() {
+    this.getEffectsForUser();
     console.log(this.currentMed);
     this.effect = new Effect(this.effectName, '', 0,false, this.currentMed !== undefined ? this.currentMed.medId : null);
   }
   ngOnChanges(changes: SimpleChanges) {
     if (this.resetEffect) {
       this.effectName = 'None';
+      return;
     }
     if (this.effectsForUser.length <= 0) {
       this.effectName = 'None';
     } else {
-      console.log(this.effectsForUser);
-      const emptyIndex = this.effectsForUser.indexOf('');
-      this.effectsForUser.splice(emptyIndex, 1);
-      if (!this.effectsForUser.includes('None')) {
-        this.effectsForUser.push('None');
-      }
-      if (!this.effectsForUser.includes('Other')) {
-        this.effectsForUser.push('Other');
-      }
       const noneIndex = this.effectsForUser.indexOf('None');
       this.effectName = this.effectsForUser[noneIndex];
     }
@@ -52,5 +50,20 @@ export class AddEffectComponent implements OnInit, OnChanges {
     this.effect.name = this.effectName;
     this.effect.medId = this.currentMed.medId;
     this.effectEvent.emit(this.effect);
+  }
+  getEffectsForUser(): void {
+    this.effectService.getAllEffectNames().subscribe({
+      next: value => {
+        if (!value.includes('None')) {
+          value.push('None');
+        }
+        if (!value.includes('Other')) {
+          value.push('Other');
+        }
+        this.effectsForUser = value;
+        console.log(this.effectsForUser);
+      },
+      error: err => this.toastrService.error('Error!', 'Could not fetch your effects.')
+    });
   }
 }

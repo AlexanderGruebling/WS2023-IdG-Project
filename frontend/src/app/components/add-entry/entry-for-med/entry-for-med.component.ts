@@ -35,12 +35,20 @@ export class EntryForMedComponent implements OnInit, OnChanges {
     if (this.medicationsForUser.length <= 0) {
       this.selectedMed = new Medication(5, 'None', 0, 0);
     } else {
-      this.selectedMed = this.medicationsForUser[5];
+      const noneMedIndex = this.medicationsForUser.findIndex(medication => medication.name === 'None');
+      this.selectedMed = this.medicationsForUser[noneMedIndex];
     }
   }
   getEffectsForUser(): void {
     this.effectService.getAllEffectNames().subscribe({
-      next: value => this.effectsForUser = value,
+      next: value => {
+        if (value.length === 0) {
+          this.effectsForUser.push('Other');
+        } else {
+          this.effectsForUser = value;
+          console.log(this.effectsForUser);
+        }
+      },
       error: err => this.toastrService.error('Error!', 'Could not fetch your effects.')
     });
   }
