@@ -3,10 +3,18 @@
   <div class="chart-container" style="position: relative;">
     <canvas  id="MyBarChart" >{{ chart }}</canvas>
   </div>
-  <div>
-    <div class="form-check form-switch" *ngFor="let medication of meds">
-      <input class="form-check-input" type="checkbox" [id]="medication.name" (change)="updateCheckedMeds(medication)">
-      <label class="form-check-label" [for]="medication.name">{{ medication.name }}</label>
+  <div class="d-flex flex-row">
+    <div>
+      <div class="form-check form-switch" *ngFor="let medication of meds">
+        <input class="form-check-input" type="checkbox" [id]="medication.name" (change)="toggleSet(selectedMeds, medication)">
+        <label class="form-check-label" [for]="medication.name">{{ medication.name }}</label>
+      </div>
+    </div>
+    <div>
+      <div class="form-check form-switch" *ngFor="let effectName of effectNames">
+        <input class="form-check-input" type="checkbox" [id]="effectName" (change)="toggleSet(selectedEffects, effectName)">
+        <label class="form-check-label" [for]="effectName">{{ effectName }}</label>
+      </div>
     </div>
   </div>
 </div>

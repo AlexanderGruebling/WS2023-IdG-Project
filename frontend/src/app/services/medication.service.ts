@@ -3,6 +3,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Medication} from '../dtos/Medication';
+import {DosagePlotData} from '../dtos/dosagePlotData';
 
 const baseUri = environment.backendUrl + '/api/v1/medication';
 
@@ -24,8 +25,10 @@ export class MedicationService {
   getForUser(): Observable<Medication[]> {
     return this.http.get<Medication[]>(baseUri);
   }
-
   delete(id: number): Observable<void> {
     return this.http.delete<void>(baseUri + '/' + id);
+  }
+  getForName(name: string): Observable<DosagePlotData[]> {
+    return this.http.get<DosagePlotData[]>(`${baseUri}/dosage/${name}`);
   }
 }

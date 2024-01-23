@@ -23,4 +23,7 @@ export class EffectService {
   getPlotData(name: string): Observable<PlotData[]>{
     return this.http.get<PlotData[]>(`${baseUri}/intensities/${name}`);
   }
+  getAllEffectNames(): Observable<string[]> {
+    return this.http.get<string[]>(baseUri);
+  }
 }

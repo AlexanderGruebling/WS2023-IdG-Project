@@ -33,6 +33,7 @@ export class AddEntryComponent implements OnInit {
   ngOnInit(): void {
     this.getForUser();
     this.getEffectsForMeds();
+    console.log(this.calendar.getToday());
   }
   getForUser(): void {
     this.medicationService.getForUser().subscribe({

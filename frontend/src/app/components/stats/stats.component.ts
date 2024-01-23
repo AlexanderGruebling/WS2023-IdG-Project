@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PlotData} from '../../dtos/plotData';
 import {EffectService} from '../../services/effect.service';
-import {lastValueFrom} from 'rxjs';
 import {Chart} from 'chart.js/auto';
 import {MedicationService} from '../../services/medication.service';
-import {Medication} from '../../dtos/Medication';
+import {Medication, MedicationWithEntries} from '../../dtos/Medication';
+import {ToastrService} from 'ngx-toastr';
+import {EffectWithEntries} from '../../dtos/effect';
+import {lastValueFrom} from 'rxjs';
+import {DosagePlotData} from '../../dtos/dosagePlotData';
 
 @Component({
   selector: 'app-stats',
@@ -12,64 +15,159 @@ import {Medication} from '../../dtos/Medication';
   styleUrls: ['./stats.component.scss']
 })
 export class StatsComponent implements OnInit {
-  selectedMeds: Medication[] = [];
+  selectedMeds: Set<Medication> = new Set();
+  selectedEffects: Set<string> = new Set();
   meds: Medication[];
-  plotData: PlotData[];
+  effectNames: string[];
+  plotData: PlotData[] = [];
   chart: Chart;
 
   constructor(
     private effectService: EffectService,
     private medicationService: MedicationService,
+    private toastrService: ToastrService,
   ) {
   }
 
-  async ngOnInit(): Promise<void> {
-    this.plotData = await this.getPlotData('Migraine');
-    this.meds = await this.getMedicationsForUser();
+  ngOnInit(): void {
+    this.getMedicationsForUser();
+    this.getAllEffectNames();
     this.chart = this.buildChart();
-    console.log(this.plotData);
-    console.log(this.meds);
   }
-  async getPlotData(effect: string): Promise<PlotData[]> {
-    return lastValueFrom(this.effectService.getPlotData(effect));
+
+  getPlotDataForEffect(effect: string) {
+    this.effectService.getPlotData(effect).subscribe({
+      next: response => this.plotData = response,
+      error: err => this.toastrService.error('Error!', 'Please contact our administrator.')
+    });
   }
-  async getMedicationsForUser(): Promise<Medication[]> {
-    return lastValueFrom(this.medicationService.getForUser());
+
+  getMedicationsForUser() {
+    this.medicationService.getForUser().subscribe({
+      next: response => this.meds = response,
+      error: err => this.toastrService.error('Error!', 'Please contact our administrator.')
+    });
   }
-  updateCheckedMeds(medication: Medication) {
-    const index = this.selectedMeds.indexOf(medication);
-    if (index > -1) {
-      this.selectedMeds.splice(index, 1);
+
+  getAllEffectNames() {
+    this.effectService.getAllEffectNames().subscribe({
+      next: response => this.effectNames = response,
+      error: err => this.toastrService.error('Error!', 'Please contact our administrator.')
+    });
+  }
+
+  async getPlotForMedication() {
+    const medicationsWithEntries: MedicationWithEntries[] = [];
+    for (const medication of this.selectedMeds) {
+      await lastValueFrom(this.medicationService.getForName(medication.name)).then(response => {
+        medicationsWithEntries.push(new MedicationWithEntries(
+          medication,
+          response.map(x => new DosagePlotData(new Date(x.date), x.dosage))));
+      });
+    }
+    return medicationsWithEntries;
+  }
+
+  async getPlotForEffects() {
+    const effectsWithEntries: EffectWithEntries[] = [];
+    for (const effect of this.selectedEffects) {
+      await lastValueFrom(this.effectService.getPlotData(effect)).then(response => {
+        effectsWithEntries.push(new EffectWithEntries(
+          effect,
+          response.map(x => new PlotData(new Date(x.date), x.intensity))));
+      });
+    }
+    return effectsWithEntries;
+  }
+
+  toggleSet(setToToggle: Set<any>, propertyToToggleBy: any) {
+    if (setToToggle.has(propertyToToggleBy)) {
+      setToToggle.delete(propertyToToggleBy);
     } else {
-      this.selectedMeds.push(medication);
+      setToToggle.add(propertyToToggleBy);
     }
+    this.updatePlot();
   }
-  buildChart(): Chart {
-    const constructedLabels = [];
-    const constructedData = [];
-    for (const plot of this.plotData) {
-      constructedLabels.push(new Date(plot.date).toDateString());
-      constructedData.push(plot.intensity);
+
+  updatePlot() {
+    this.getPlotForEffects().then((effectEntries: EffectWithEntries[]) => {
+      this.getPlotForMedication().then((medicationEntries: MedicationWithEntries[]) => {
+        const collectedEntries: (EffectWithEntries | MedicationWithEntries)[] = [...effectEntries, ...medicationEntries];
+        console.log(collectedEntries);
+        this.updateDatasets(collectedEntries);
+      });
+    });
+  }
+
+  updateDatasets(entries: (MedicationWithEntries | EffectWithEntries)[]) {
+    const newDatasets = [];
+    const newLabels: Date[] = [];
+    for (const entry of entries) {
+      if (entry.entriesForPlot.length === 0) {
+        continue;
+      }
+      if (entry instanceof MedicationWithEntries) {
+        const dateStringsMap = new Map();
+        for (const x of entry.entriesForPlot.sort((a, b) => a.date.getTime() - b.date.getTime())) {
+          const date = new Date(x.date);
+          dateStringsMap.set(x, date.toDateString());
+          newLabels.push(date);
+        }
+        newDatasets.push({
+          type: 'bar',
+          label: entry.selectedMed.name,
+          data: entry.entriesForPlot.map(plotEntry => ({x: dateStringsMap.get(plotEntry), y: plotEntry.dosage}))
+        });
+      } else {
+        const dateStringsMap = new Map();
+        for (const x of entry.entriesForPlot.sort((a, b) => a.date.getTime() - b.date.getTime())) {
+          const date = new Date(x.date);
+          dateStringsMap.set(x, date.toDateString());
+          newLabels.push(date);
+        }
+        newDatasets.push({
+          type: 'line',
+          label: entry.effectName,
+          yAxisID: 'y1',
+          data: entry.entriesForPlot.map(plotEntry => ({x: dateStringsMap.get(plotEntry), y: plotEntry.intensity}))
+        });
+      }
     }
+    this.chart.data.datasets = newDatasets;
+    this.chart.data.labels = [...new Set(newLabels.sort((a, b) => (a.getTime() - b.getTime()))
+      .map(date => date.toDateString()))];
+    this.chart.update();
+    console.log(this.chart.data.datasets);
+  }
+
+  getLast7Days() {
+    const today = new Date();
+    const dateStrings = [];
+
+    for (let i = 6; i >= 0; i--) {
+      const currentDate = new Date(today);
+      currentDate.setDate(today.getDate() - i);
+      dateStrings.push((currentDate).toDateString());
+    }
+    return dateStrings;
+  }
+
+  buildChart(): Chart {
     return new Chart('MyBarChart', {
       data: {
-        labels: constructedLabels,
-        datasets: [{
-          type: 'line',
-          label: 'Migraine Intensity',
-          data: constructedData,
-        }]
+        datasets: [],
       },
       options: {
         scales: {
           y: {
             min: 0,
-            max: 10,
-            position: 'right'
+            max: 1000,
           },
           y1: {
-            type: 'linear',
             display: true,
+            min: 0,
+            max: 10,
+            position: 'right'
           }
         }
       }
